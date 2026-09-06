@@ -1,0 +1,331 @@
+# =============================================================================
+# Greenlight policy pack — YouTube advertiser-friendly content guidelines
+# =============================================================================
+#
+# INVARIANT I1: policy lives here, in versioned data. Never in a prompt written
+# from memory, never in model weights, never in a component.
+#
+# READ THIS BEFORE EDITING
+# -----------------------
+# Every clause carries `text_status`. `paraphrase` means the summary below is
+# written in our own words from the live help-centre page and has NOT yet been
+# checked line by line against it. `verbatim` means a short quoted excerpt was
+# taken from the source and `verified_at` records when.
+#
+# The UI renders `text_status` next to every citation. A paraphrase that is
+# labelled a paraphrase is honest. A paraphrase presented as a quotation is the
+# exact failure mode this whole architecture exists to prevent.
+#
+# Verification checklist: docs/POLICY-VERIFICATION.md
+# =============================================================================
+
+pack:
+  id: youtube-afg
+  version: "2026.09.01"
+  source_url: https://support.google.com/youtube/answer/6162278
+  update_log_url: https://support.google.com/youtube/answer/9725604
+  captured_at: "2026-09-04"
+  captured_by: ambrstack
+  note: >
+    Clause summaries written by hand against the live help centre and the ad
+    guideline update log. Not scraped. Re-read the update log before bumping
+    the version. Bumping the version invalidates every cached scan by design.
+
+clauses:
+  # --- inappropriate language -------------------------------------------------
+  - id: AFG-LANG-001
+    title: Slurs and language that demeans a protected group
+    category: inappropriate_language
+    surfaces: [video_body, audio, title, thumbnail]
+    detector: lexicon
+    severity: no_ads
+    effective_date: "2025-07"
+    remediation: bleep
+    source_anchor: "#inappropriate-language"
+    text_status: paraphrase
+    verified_at: null
+    thresholds:
+      tiers: [slur]
+      min_occurrences: 1
+    clause_text: >
+      Language that demeans or dehumanises a person or group on the basis of a
+      protected attribute is treated far more severely than ordinary profanity,
+      and is not eligible for ad revenue even on a single use.
+
+  - id: AFG-LANG-002
+    title: Profanity used repeatedly or throughout
+    category: inappropriate_language
+    surfaces: [video_body, audio]
+    detector: density
+    severity: limited_ads
+    effective_date: "2025-07"
+    remediation: bleep
+    source_anchor: "#inappropriate-language"
+    text_status: paraphrase
+    verified_at: null
+    thresholds:
+      window_ms: 60000
+      hop_ms: 15000
+      strong_terms_per_minute: 4
+      share_of_sentences_affected: 0.30
+      min_strong_terms_in_window: 4
+      max_gap_ms: 20000
+      rate_floor_ms: 30000
+    clause_text: >
+      Content in which profanity is the focus, or in which it is used
+      repeatedly or throughout, may not be suitable for all advertisers. This
+      is about frequency and focus across the video, not about any single word.
+
+  - id: AFG-PKG-001
+    title: Profanity in the title or thumbnail
+    category: inappropriate_language
+    surfaces: [title, thumbnail]
+    detector: packaging
+    severity: no_ads
+    effective_date: "2025-07"
+    remediation: packaging_edit
+    source_anchor: "#inappropriate-language"
+    text_status: paraphrase
+    verified_at: null
+    thresholds:
+      tiers: [strong, moderate, slur]
+      min_occurrences: 1
+    clause_text: >
+      Strong or moderate profanity placed in the title or the thumbnail image
+      is excluded from ad inventory regardless of the advertiser's settings.
+      This survived the July 2025 relaxation and is one of the two rules that
+      apply at every advertiser suitability setting.
+
+  # --- violence ---------------------------------------------------------------
+  - id: AFG-VIOL-001
+    title: Graphic violence as the focus of the content
+    category: violence
+    surfaces: [video_body, audio]
+    detector: focus
+    severity: limited_ads
+    effective_date: "2025-06"
+    remediation: manual_review
+    source_anchor: "#violence"
+    text_status: paraphrase
+    verified_at: null
+    thresholds:
+      window_ms: 60000
+      hop_ms: 15000
+      min_terms_in_window: 5
+      min_distinct_terms: 3
+    clause_text: >
+      Content whose focus is graphic violence, including sustained depiction of
+      injury or its aftermath, may receive limited or no ad revenue depending on
+      how graphic it is and whether there is meaningful editorial context.
+
+  - id: AFG-VIOL-002
+    title: Real-world violent acts described or depicted in detail
+    category: violence
+    surfaces: [video_body, audio]
+    detector: focus
+    severity: no_ads
+    effective_date: "2025-06"
+    remediation: manual_review
+    source_anchor: "#violence"
+    text_status: paraphrase
+    verified_at: null
+    thresholds:
+      window_ms: 60000
+      hop_ms: 15000
+      min_terms_in_window: 6
+      min_distinct_terms: 4
+    clause_text: >
+      Footage or detailed description of real-world violent acts, including
+      assaults and their immediate aftermath, is generally not eligible for ad
+      revenue outside a documentary, educational or news context.
+
+  # --- sensitive events -------------------------------------------------------
+  - id: AFG-SENS-001
+    title: Recent tragedy and sensitive events
+    category: sensitive_events
+    surfaces: [video_body, audio, title, thumbnail]
+    detector: focus
+    severity: no_ads
+    effective_date: "2025-06"
+    remediation: manual_review
+    source_anchor: "#sensitive-events"
+    text_status: paraphrase
+    verified_at: null
+    thresholds:
+      window_ms: 60000
+      hop_ms: 15000
+      min_terms_in_window: 4
+      min_distinct_terms: 3
+    clause_text: >
+      Content focused on a recent tragedy, a mass-casualty event or a major
+      terrorist act is generally not eligible for ad revenue, even where the
+      treatment is respectful or purely factual.
+
+  # --- adult themes -----------------------------------------------------------
+  - id: AFG-ADULT-001
+    title: Sexually suggestive themes
+    category: adult_content
+    surfaces: [video_body, audio, thumbnail]
+    detector: focus
+    severity: limited_ads
+    effective_date: "2025-06"
+    remediation: manual_review
+    source_anchor: "#adult-content"
+    text_status: paraphrase
+    verified_at: null
+    thresholds:
+      window_ms: 60000
+      hop_ms: 15000
+      min_terms_in_window: 4
+      min_distinct_terms: 3
+    clause_text: >
+      Sexually suggestive discussion or imagery that is not gratuitous may earn
+      limited ad revenue. Explicit sexual content is not eligible for any ad
+      revenue.
+
+  # --- recreational drugs -----------------------------------------------------
+  - id: AFG-DRUG-001
+    title: Recreational drugs and drug-related content
+    category: recreational_drugs
+    surfaces: [video_body, audio]
+    detector: focus
+    severity: limited_ads
+    effective_date: "2026-02"
+    remediation: manual_review
+    source_anchor: "#recreational-drugs"
+    text_status: paraphrase
+    verified_at: null
+    thresholds:
+      window_ms: 60000
+      hop_ms: 15000
+      min_terms_in_window: 4
+      min_distinct_terms: 3
+    clause_text: >
+      Content focused on the use, sale or promotion of recreational drugs may
+      receive limited ad revenue. Educational, documentary and scripted or
+      gaming treatments are handled differently, so context is decisive here.
+
+  # --- harmful or dangerous acts ---------------------------------------------
+  - id: AFG-HARM-001
+    title: Harmful or dangerous acts
+    category: harmful_acts
+    surfaces: [video_body, audio]
+    detector: focus
+    severity: limited_ads
+    effective_date: "2025-06"
+    remediation: manual_review
+    source_anchor: "#harmful-dangerous-acts"
+    text_status: paraphrase
+    verified_at: null
+    thresholds:
+      window_ms: 60000
+      hop_ms: 15000
+      min_terms_in_window: 4
+      min_distinct_terms: 3
+    clause_text: >
+      Content showing or instructing acts with a serious risk of physical harm,
+      including dangerous stunts and challenges, may receive limited or no ad
+      revenue depending on how imitable the act is.
+
+  # --- controversial issues ---------------------------------------------------
+  - id: AFG-CONTRO-001
+    title: Controversial issues
+    category: controversial_issues
+    surfaces: [video_body, audio]
+    detector: focus
+    severity: limited_ads
+    effective_date: "2025-06"
+    remediation: manual_review
+    source_anchor: "#controversial-issues"
+    text_status: paraphrase
+    verified_at: null
+    thresholds:
+      window_ms: 60000
+      hop_ms: 15000
+      min_terms_in_window: 5
+      min_distinct_terms: 4
+    clause_text: >
+      Sustained focus on a controversial or sensitive social issue may receive
+      limited ad revenue even when the treatment is neutral, because the
+      subject itself constrains which advertisers will buy against it.
+
+  # --- firearms ---------------------------------------------------------------
+  - id: AFG-FIRE-001
+    title: Firearms sales, assembly and modification
+    category: firearms
+    surfaces: [video_body, audio]
+    detector: focus
+    severity: no_ads
+    effective_date: "2025-06"
+    remediation: manual_review
+    source_anchor: "#firearms"
+    text_status: paraphrase
+    verified_at: null
+    thresholds:
+      window_ms: 60000
+      hop_ms: 15000
+      min_terms_in_window: 4
+      min_distinct_terms: 3
+    clause_text: >
+      Content that promotes the sale of firearms or accessories, or that
+      instructs on assembling, converting or modifying a firearm, is not
+      eligible for ad revenue.
+
+  # --- shocking content -------------------------------------------------------
+  - id: AFG-SHOCK-001
+    title: Shocking content and gore
+    category: shocking_content
+    surfaces: [video_body, audio, thumbnail]
+    detector: focus
+    severity: no_ads
+    effective_date: "2025-06"
+    remediation: manual_review
+    source_anchor: "#shocking-content"
+    text_status: paraphrase
+    verified_at: null
+    thresholds:
+      window_ms: 60000
+      hop_ms: 15000
+      min_terms_in_window: 4
+      min_distinct_terms: 3
+    clause_text: >
+      Gore, bodily fluids and imagery intended to disgust are not eligible for
+      ad revenue, and are treated more severely when placed in the thumbnail.
+
+# =============================================================================
+# deprecated_rules
+# -----------------------------------------------------------------------------
+# Rules that WERE in force and are not any more. The loader asserts that none of
+# these IDs can reach the allowlist, and tests/policy.test.ts asserts it again
+# independently. This is invariant I2 and it is the reason Greenlight cannot
+# emit the single most repeated piece of stale monetization advice on the
+# internet.
+# =============================================================================
+deprecated_rules:
+  - id: AFG-LANG-DEP-7SEC
+    title: Strong profanity in the first 7 seconds
+    removed_on: "2025-07"
+    superseded_by: [AFG-LANG-002, AFG-PKG-001]
+    source_url: https://support.google.com/youtube/answer/9725604
+    evidence: >
+      YouTube's ad guideline update log records that use of stronger profanity
+      in the first 7 seconds of content can now be eligible to earn ad revenue.
+      Announced 29 July 2025.
+    why_people_still_believe_it: >
+      In force from Nov 2022 (as a 15-second rule) and from Mar 2023 as a
+      7-second rule, and repeated across every creator blog and tips video since.
+      Present in most LLM training data. This is the single most common false
+      positive in naive policy checkers.
+
+  - id: AFG-LANG-DEP-15SEC
+    title: Any profanity in the first 15 seconds
+    removed_on: "2023-03"
+    superseded_by: [AFG-LANG-002]
+    source_url: https://support.google.com/youtube/answer/9725604
+    evidence: >
+      Narrowed in March 2023 to strong profanity in the first 7 seconds, and
+      then removed outright in July 2025.
+    why_people_still_believe_it: >
+      The original November 2022 rule, applied retroactively to already-published
+      videos. It generated the loudest creator backlash and therefore the most
+      surviving blog posts.
