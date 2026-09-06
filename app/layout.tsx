@@ -22,6 +22,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <span className="text-sm font-medium tracking-tight text-slate-100">Greenlight</span>
             </Link>
             <nav className="flex items-center gap-5 text-[13px] text-slate-400">
+              <Link href="/compare" className="transition-colors hover:text-slate-200">
+                Versus a bare model
+              </Link>
               <a
                 href="https://support.google.com/youtube/answer/6162278"
                 target="_blank"

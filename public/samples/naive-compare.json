@@ -1,0 +1,39 @@
+{
+  "status": "placeholder",
+  "clipId": "clip-01",
+  "title": "This patch is a fucking disaster",
+  "capturedAt": null,
+  "packVersion": "2026.09.01",
+  "naive": {
+    "model": null,
+    "systemPrompt": "You are a YouTube monetization expert. Review the transcript and identify anything that would cause the video to be demonetized or given limited ads under YouTube's advertiser-friendly guidelines.",
+    "userPromptPreview": "Video title: This patch is a fucking disaster\n\nTranscript:\nRight, welcome back. Fuck, I have been waiting three weeks to talk about this one. Grab a drink and settle in because we are going long today. The patch notes dropped on Tuesday and honestly the first read was fine. Nothing alarming. Then people started testing it and the wheels came off almost immediately. So let me walk you through what …",
+    "rawResponse": null,
+    "issues": [],
+    "citesDeprecatedRule": false,
+    "deprecatedRuleMatches": []
+  },
+  "greenlight": {
+    "clearedSpans": [],
+    "findings": [],
+    "dropped": []
+  },
+  "deprecatedRules": [
+    {
+      "id": "AFG-LANG-DEP-7SEC",
+      "title": "Strong profanity in the first 7 seconds",
+      "removedOn": "2025-07",
+      "sourceUrl": "https://support.google.com/youtube/answer/9725604",
+      "evidence": "YouTube's ad guideline update log records that use of stronger profanity in the first 7 seconds of content can now be eligible to earn ad revenue. Announced 29 July 2025.",
+      "whyPeopleStillBelieveIt": "In force from Nov 2022 (as a 15-second rule) and from Mar 2023 as a 7-second rule, and repeated across every creator blog and tips video since. Present in most LLM training data. This is the single most common false positive in naive policy checkers."
+    },
+    {
+      "id": "AFG-LANG-DEP-15SEC",
+      "title": "Any profanity in the first 15 seconds",
+      "removedOn": "2023-03",
+      "sourceUrl": "https://support.google.com/youtube/answer/9725604",
+      "evidence": "Narrowed in March 2023 to strong profanity in the first 7 seconds, and then removed outright in July 2025.",
+      "whyPeopleStillBelieveIt": "The original November 2022 rule, applied retroactively to already-published videos. It generated the loudest creator backlash and therefore the most surviving blog posts."
+    }
+  ]
+}
