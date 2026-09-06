@@ -1,0 +1,72 @@
+{
+  "$comment": [
+    "Hand-labelled ground truth for the eval harness.",
+    "",
+    "`spans` are things that SHOULD be found. `negatives` are things that should",
+    "NOT be, and they matter just as much: a checker that flags everything scores",
+    "perfect recall and is useless. N1 is the whole product thesis expressed as a",
+    "test case.",
+    "",
+    "Timestamps were read off the transcript fixture, not estimated. Re-label if",
+    "the fixture text changes."
+  ],
+  "clipId": "clip-01",
+  "label": "Commentary — patch reaction",
+  "transcript": "clip-01.transcript.json",
+  "title": "This patch is a fucking disaster",
+  "durationMs": 119700,
+  "labelledBy": "ambrstack",
+  "labelledAt": "2026-09-08",
+  "spans": [
+    {
+      "id": "L1",
+      "startMs": 55000,
+      "endMs": 62500,
+      "surface": "audio",
+      "clauseId": "AFG-LANG-002",
+      "category": "inappropriate_language",
+      "note": "Four strong terms in roughly seven seconds. Repeated use, so the density clause applies."
+    },
+    {
+      "id": "L2",
+      "startMs": 88000,
+      "endMs": 104000,
+      "surface": "video_body",
+      "clauseId": "AFG-SENS-001",
+      "category": "sensitive_events",
+      "note": "Sustained discussion of a shooting: gunman, death toll, victims, memorial, tragedy."
+    },
+    {
+      "id": "L3",
+      "startMs": 0,
+      "endMs": 0,
+      "surface": "title",
+      "clauseId": "AFG-PKG-001",
+      "category": "inappropriate_language",
+      "note": "Strong profanity in the planned title. One of the two rules that survived the July 2025 relaxation."
+    }
+  ],
+  "negatives": [
+    {
+      "id": "N1",
+      "startMs": 900,
+      "endMs": 1800,
+      "category": "inappropriate_language",
+      "note": "Isolated strong profanity at 0:01. MUST NOT be flagged. The first-7-seconds rule was deleted in July 2025, and an isolated strong word in the video body is ad-eligible. This is the single label that separates Greenlight from a naive checker."
+    },
+    {
+      "id": "N2",
+      "startMs": 62500,
+      "endMs": 75000,
+      "category": "inappropriate_language",
+      "note": "The stretch after the rant is clean. The density span must not bleed forward across it."
+    },
+    {
+      "id": "N3",
+      "startMs": 20000,
+      "endMs": 45000,
+      "category": "violence",
+      "note": "Ordinary product-failure language: 'the wheels came off', 'it gets stupid'. No violence clause should fire here."
+    }
+  ]
+}
