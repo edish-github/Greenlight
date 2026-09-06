@@ -1,0 +1,54 @@
+{
+  "$comment": [
+    "Topic term sets for the focus detector, keyed by policy category.",
+    "Same rule as the tiered lexicon: these generate CANDIDATES only. A single",
+    "mention never fires. The focus detector requires several distinct terms",
+    "inside one sliding window, and the Gate then decides against clause text",
+    "whether sustained presence actually matches the clause.",
+    "",
+    "Multi-word entries are matched as phrases over the word stream, up to 3 words."
+  ],
+  "version": "2026.09.01",
+  "categories": {
+    "violence": [
+      "kill", "killed", "killing", "murder", "murdered", "stab", "stabbed",
+      "shot him", "shot her", "beat him", "beating", "brutal", "blood",
+      "bleeding", "corpse", "body", "assault", "attacked", "execution",
+      "torture", "fight", "punched", "weapon"
+    ],
+    "sensitive_events": [
+      "mass shooting", "school shooting", "terror attack", "terrorist",
+      "bombing", "death toll", "victims", "gunman", "massacre", "tragedy",
+      "earthquake", "plane crash", "died in the", "funeral", "memorial",
+      "shooting at", "hostage"
+    ],
+    "adult_content": [
+      "sex", "sexual", "naked", "nude", "porn", "onlyfans", "strip club",
+      "hookup", "aroused", "lingerie", "seduce", "bedroom scene"
+    ],
+    "recreational_drugs": [
+      "weed", "cannabis", "marijuana", "cocaine", "meth", "heroin", "lsd",
+      "shrooms", "mdma", "ecstasy", "getting high", "smoke a joint", "dealer",
+      "vape", "bong", "edibles", "drug deal"
+    ],
+    "harmful_acts": [
+      "challenge", "do not try this", "dangerous stunt", "jump off",
+      "set it on fire", "swallow", "overdose", "electrocute", "rooftop",
+      "climb the", "hold your breath", "at your own risk"
+    ],
+    "controversial_issues": [
+      "abortion", "immigration", "gun control", "election fraud", "vaccine",
+      "climate hoax", "protest", "riot", "war in", "conflict", "genocide",
+      "political violence", "conspiracy"
+    ],
+    "firearms": [
+      "ar 15", "ak 47", "handgun", "rifle", "magazine capacity", "ammo",
+      "ammunition", "silencer", "suppressor", "trigger group", "lower receiver",
+      "build a gun", "gun sale", "3d printed gun", "full auto"
+    ],
+    "shocking_content": [
+      "gore", "guts", "vomit", "puke", "maggots", "rotting", "decapitated",
+      "mutilated", "graphic footage", "disgusting scene", "severed"
+    ]
+  }
+}

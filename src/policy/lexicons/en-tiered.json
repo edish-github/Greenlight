@@ -1,0 +1,50 @@
+{
+  "$comment": [
+    "Tiered term lexicon for the deterministic candidate generators.",
+    "This file produces CANDIDATES, never findings. A term appearing here means",
+    "'a human should look at this span', not 'this violates a policy'. The Gate",
+    "decides, against clause text, whether a candidate is a finding.",
+    "",
+    "The `slur` tier ships EMPTY on purpose. Slur lists are jurisdiction- and",
+    "community-specific and go stale badly; populate it from a maintained,",
+    "licensed list before relying on AFG-LANG-001, and record the source below."
+  ],
+  "language": "en",
+  "version": "2026.09.01",
+  "tiers": {
+    "strong": [
+      "fuck", "fucks", "fucked", "fucking", "fucker", "fuckers", "fuckin",
+      "motherfucker", "motherfuckers", "motherfucking",
+      "cunt", "cunts"
+    ],
+    "moderate": [
+      "shit", "shits", "shitty", "shitting", "bullshit",
+      "bitch", "bitches", "bitching",
+      "asshole", "assholes", "arsehole",
+      "bastard", "bastards",
+      "dick", "dickhead", "prick", "twat", "wanker", "bollocks",
+      "piss", "pissed", "pissing"
+    ],
+    "mild": [
+      "damn", "damned", "goddamn", "hell", "crap", "crappy", "screwed", "sucks"
+    ],
+    "slur": []
+  },
+  "slur_source": null,
+  "$obscured_comment": [
+    "YouTube's guidelines place obscured profanity - bleeping or muting the word,",
+    "or covering it with bars or symbols - in the tier that can earn ad revenue.",
+    "The lexicon detector therefore recognises these forms and records them as",
+    "already-obscured rather than raising a candidate. This is also why `bleep`",
+    "is a policy-grounded remediation rather than a guess."
+  ],
+  "obscured_patterns": [
+    "\\bf+[*#@$%]+k+\\b",
+    "\\bs+[*#@$%]+t\\b",
+    "\\b[a-z]{1,2}[*#@$%]{2,}[a-z]{0,3}\\b",
+    "\\bbleep(ed|ing)?\\b"
+  ],
+  "abbreviation_allowlist": [
+    "wtf", "af", "stfu", "fml", "smh", "wth"
+  ]
+}
