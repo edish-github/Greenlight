@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  background-color: #090d16;
+  color: #e6ebf4;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Keyboard focus stays visible everywhere. A timeline you can only operate with
+   a mouse is a timeline half the judges cannot operate. */
+:focus-visible {
+  outline: 2px solid #60a5fa;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+::selection {
+  background: #1d4ed8;
+  color: #fff;
+}
+
+/* Thin scrollbars in the findings panel; the default light one is jarring on
+   this background. */
+.gl-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #2b3648 transparent;
+}
+.gl-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+.gl-scroll::-webkit-scrollbar-thumb {
+  background: #2b3648;
+  border-radius: 999px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
