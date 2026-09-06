@@ -1,0 +1,1711 @@
+{
+  "provider": "fixture",
+  "model": "synthetic",
+  "language": "en",
+  "durationMs": 119735,
+  "text": "Right, welcome back. Fuck, I have been waiting three weeks to talk about this one. Grab a drink and settle in because we are going long today. The patch notes dropped on Tuesday and honestly the first read was fine. Nothing alarming. Then people started testing it and the wheels came off almost immediately. So let me walk you through what actually happened and why the studio response has been so strange. First the timeline. On Tuesday morning the notes go up. By lunchtime three separate creators have reproduced the bug on stream. By Tuesday night it is trending. Now here is where it gets stupid. What the hell is this. Are you shitting me. This is the same shit they pulled last season and the exact same shit the season before that and I am so tired of it. It is the same fucking bug. The same fucking bug, shipped twice, in the same fucking quarter, and not one fucking person at that studio thought to check. Absolute shit show. Anyway. Let me calm down and get back to the actual analysis because there is a serious point underneath all of this. The engineering culture question is real and it is worth taking seriously. Moving on to the second thing I wanted to cover. There was a shooting reported near the venue on Saturday and the community response has been genuinely difficult to watch. The gunman was named on Sunday. The death toll has been revised twice since then and the victims are still being identified. A memorial has been set up outside and the tragedy has understandably overshadowed everything else that happened that weekend. I want to be careful here because there are families involved. So that is where things stand. Let me know what you think in the comments and I will see you in the next one.",
+  "words": [
+    {
+      "text": "Right,",
+      "startMs": 0,
+      "endMs": 345
+    },
+    {
+      "text": "welcome",
+      "startMs": 385,
+      "endMs": 730
+    },
+    {
+      "text": "back.",
+      "startMs": 770,
+      "endMs": 1115
+    },
+    {
+      "text": "Fuck,",
+      "startMs": 1155,
+      "endMs": 1500
+    },
+    {
+      "text": "I",
+      "startMs": 1540,
+      "endMs": 1885
+    },
+    {
+      "text": "have",
+      "startMs": 1925,
+      "endMs": 2270
+    },
+    {
+      "text": "been",
+      "startMs": 2310,
+      "endMs": 2655
+    },
+    {
+      "text": "waiting",
+      "startMs": 2695,
+      "endMs": 3040
+    },
+    {
+      "text": "three",
+      "startMs": 3080,
+      "endMs": 3425
+    },
+    {
+      "text": "weeks",
+      "startMs": 3465,
+      "endMs": 3810
+    },
+    {
+      "text": "to",
+      "startMs": 3850,
+      "endMs": 4195
+    },
+    {
+      "text": "talk",
+      "startMs": 4235,
+      "endMs": 4580
+    },
+    {
+      "text": "about",
+      "startMs": 4620,
+      "endMs": 4965
+    },
+    {
+      "text": "this",
+      "startMs": 5005,
+      "endMs": 5350
+    },
+    {
+      "text": "one.",
+      "startMs": 5390,
+      "endMs": 5735
+    },
+    {
+      "text": "Grab",
+      "startMs": 5775,
+      "endMs": 6120
+    },
+    {
+      "text": "a",
+      "startMs": 6160,
+      "endMs": 6505
+    },
+    {
+      "text": "drink",
+      "startMs": 6545,
+      "endMs": 6890
+    },
+    {
+      "text": "and",
+      "startMs": 6930,
+      "endMs": 7275
+    },
+    {
+      "text": "settle",
+      "startMs": 7315,
+      "endMs": 7660
+    },
+    {
+      "text": "in",
+      "startMs": 7700,
+      "endMs": 8045
+    },
+    {
+      "text": "because",
+      "startMs": 8085,
+      "endMs": 8430
+    },
+    {
+      "text": "we",
+      "startMs": 8470,
+      "endMs": 8815
+    },
+    {
+      "text": "are",
+      "startMs": 8855,
+      "endMs": 9200
+    },
+    {
+      "text": "going",
+      "startMs": 9240,
+      "endMs": 9585
+    },
+    {
+      "text": "long",
+      "startMs": 9625,
+      "endMs": 9970
+    },
+    {
+      "text": "today.",
+      "startMs": 10010,
+      "endMs": 10355
+    },
+    {
+      "text": "The",
+      "startMs": 10395,
+      "endMs": 10740
+    },
+    {
+      "text": "patch",
+      "startMs": 10780,
+      "endMs": 11125
+    },
+    {
+      "text": "notes",
+      "startMs": 11165,
+      "endMs": 11510
+    },
+    {
+      "text": "dropped",
+      "startMs": 11550,
+      "endMs": 11895
+    },
+    {
+      "text": "on",
+      "startMs": 11935,
+      "endMs": 12280
+    },
+    {
+      "text": "Tuesday",
+      "startMs": 12320,
+      "endMs": 12665
+    },
+    {
+      "text": "and",
+      "startMs": 12705,
+      "endMs": 13050
+    },
+    {
+      "text": "honestly",
+      "startMs": 13090,
+      "endMs": 13435
+    },
+    {
+      "text": "the",
+      "startMs": 13475,
+      "endMs": 13820
+    },
+    {
+      "text": "first",
+      "startMs": 13860,
+      "endMs": 14205
+    },
+    {
+      "text": "read",
+      "startMs": 14245,
+      "endMs": 14590
+    },
+    {
+      "text": "was",
+      "startMs": 14630,
+      "endMs": 14975
+    },
+    {
+      "text": "fine.",
+      "startMs": 15015,
+      "endMs": 15360
+    },
+    {
+      "text": "Nothing",
+      "startMs": 15400,
+      "endMs": 15745
+    },
+    {
+      "text": "alarming.",
+      "startMs": 15785,
+      "endMs": 16130
+    },
+    {
+      "text": "Then",
+      "startMs": 16170,
+      "endMs": 16515
+    },
+    {
+      "text": "people",
+      "startMs": 16555,
+      "endMs": 16900
+    },
+    {
+      "text": "started",
+      "startMs": 16940,
+      "endMs": 17285
+    },
+    {
+      "text": "testing",
+      "startMs": 17325,
+      "endMs": 17670
+    },
+    {
+      "text": "it",
+      "startMs": 17710,
+      "endMs": 18055
+    },
+    {
+      "text": "and",
+      "startMs": 18095,
+      "endMs": 18440
+    },
+    {
+      "text": "the",
+      "startMs": 18480,
+      "endMs": 18825
+    },
+    {
+      "text": "wheels",
+      "startMs": 18865,
+      "endMs": 19210
+    },
+    {
+      "text": "came",
+      "startMs": 19250,
+      "endMs": 19595
+    },
+    {
+      "text": "off",
+      "startMs": 19635,
+      "endMs": 19980
+    },
+    {
+      "text": "almost",
+      "startMs": 20020,
+      "endMs": 20365
+    },
+    {
+      "text": "immediately.",
+      "startMs": 20405,
+      "endMs": 20750
+    },
+    {
+      "text": "So",
+      "startMs": 20790,
+      "endMs": 21135
+    },
+    {
+      "text": "let",
+      "startMs": 21175,
+      "endMs": 21520
+    },
+    {
+      "text": "me",
+      "startMs": 21560,
+      "endMs": 21905
+    },
+    {
+      "text": "walk",
+      "startMs": 21945,
+      "endMs": 22290
+    },
+    {
+      "text": "you",
+      "startMs": 22330,
+      "endMs": 22675
+    },
+    {
+      "text": "through",
+      "startMs": 22715,
+      "endMs": 23060
+    },
+    {
+      "text": "what",
+      "startMs": 23100,
+      "endMs": 23445
+    },
+    {
+      "text": "actually",
+      "startMs": 23485,
+      "endMs": 23830
+    },
+    {
+      "text": "happened",
+      "startMs": 23870,
+      "endMs": 24215
+    },
+    {
+      "text": "and",
+      "startMs": 24255,
+      "endMs": 24600
+    },
+    {
+      "text": "why",
+      "startMs": 24640,
+      "endMs": 24985
+    },
+    {
+      "text": "the",
+      "startMs": 25025,
+      "endMs": 25370
+    },
+    {
+      "text": "studio",
+      "startMs": 25410,
+      "endMs": 25755
+    },
+    {
+      "text": "response",
+      "startMs": 25795,
+      "endMs": 26140
+    },
+    {
+      "text": "has",
+      "startMs": 26180,
+      "endMs": 26525
+    },
+    {
+      "text": "been",
+      "startMs": 26565,
+      "endMs": 26910
+    },
+    {
+      "text": "so",
+      "startMs": 26950,
+      "endMs": 27295
+    },
+    {
+      "text": "strange.",
+      "startMs": 27335,
+      "endMs": 27680
+    },
+    {
+      "text": "First",
+      "startMs": 27720,
+      "endMs": 28065
+    },
+    {
+      "text": "the",
+      "startMs": 28105,
+      "endMs": 28450
+    },
+    {
+      "text": "timeline.",
+      "startMs": 28490,
+      "endMs": 28835
+    },
+    {
+      "text": "On",
+      "startMs": 28875,
+      "endMs": 29220
+    },
+    {
+      "text": "Tuesday",
+      "startMs": 29260,
+      "endMs": 29605
+    },
+    {
+      "text": "morning",
+      "startMs": 29645,
+      "endMs": 29990
+    },
+    {
+      "text": "the",
+      "startMs": 30030,
+      "endMs": 30375
+    },
+    {
+      "text": "notes",
+      "startMs": 30415,
+      "endMs": 30760
+    },
+    {
+      "text": "go",
+      "startMs": 30800,
+      "endMs": 31145
+    },
+    {
+      "text": "up.",
+      "startMs": 31185,
+      "endMs": 31530
+    },
+    {
+      "text": "By",
+      "startMs": 31570,
+      "endMs": 31915
+    },
+    {
+      "text": "lunchtime",
+      "startMs": 31955,
+      "endMs": 32300
+    },
+    {
+      "text": "three",
+      "startMs": 32340,
+      "endMs": 32685
+    },
+    {
+      "text": "separate",
+      "startMs": 32725,
+      "endMs": 33070
+    },
+    {
+      "text": "creators",
+      "startMs": 33110,
+      "endMs": 33455
+    },
+    {
+      "text": "have",
+      "startMs": 33495,
+      "endMs": 33840
+    },
+    {
+      "text": "reproduced",
+      "startMs": 33880,
+      "endMs": 34225
+    },
+    {
+      "text": "the",
+      "startMs": 34265,
+      "endMs": 34610
+    },
+    {
+      "text": "bug",
+      "startMs": 34650,
+      "endMs": 34995
+    },
+    {
+      "text": "on",
+      "startMs": 35035,
+      "endMs": 35380
+    },
+    {
+      "text": "stream.",
+      "startMs": 35420,
+      "endMs": 35765
+    },
+    {
+      "text": "By",
+      "startMs": 35805,
+      "endMs": 36150
+    },
+    {
+      "text": "Tuesday",
+      "startMs": 36190,
+      "endMs": 36535
+    },
+    {
+      "text": "night",
+      "startMs": 36575,
+      "endMs": 36920
+    },
+    {
+      "text": "it",
+      "startMs": 36960,
+      "endMs": 37305
+    },
+    {
+      "text": "is",
+      "startMs": 37345,
+      "endMs": 37690
+    },
+    {
+      "text": "trending.",
+      "startMs": 37730,
+      "endMs": 38075
+    },
+    {
+      "text": "Now",
+      "startMs": 38115,
+      "endMs": 38460
+    },
+    {
+      "text": "here",
+      "startMs": 38500,
+      "endMs": 38845
+    },
+    {
+      "text": "is",
+      "startMs": 38885,
+      "endMs": 39230
+    },
+    {
+      "text": "where",
+      "startMs": 39270,
+      "endMs": 39615
+    },
+    {
+      "text": "it",
+      "startMs": 39655,
+      "endMs": 40000
+    },
+    {
+      "text": "gets",
+      "startMs": 40040,
+      "endMs": 40385
+    },
+    {
+      "text": "stupid.",
+      "startMs": 40425,
+      "endMs": 40770
+    },
+    {
+      "text": "What",
+      "startMs": 40810,
+      "endMs": 41155
+    },
+    {
+      "text": "the",
+      "startMs": 41195,
+      "endMs": 41540
+    },
+    {
+      "text": "hell",
+      "startMs": 41580,
+      "endMs": 41925
+    },
+    {
+      "text": "is",
+      "startMs": 41965,
+      "endMs": 42310
+    },
+    {
+      "text": "this.",
+      "startMs": 42350,
+      "endMs": 42695
+    },
+    {
+      "text": "Are",
+      "startMs": 42735,
+      "endMs": 43080
+    },
+    {
+      "text": "you",
+      "startMs": 43120,
+      "endMs": 43465
+    },
+    {
+      "text": "shitting",
+      "startMs": 43505,
+      "endMs": 43850
+    },
+    {
+      "text": "me.",
+      "startMs": 43890,
+      "endMs": 44235
+    },
+    {
+      "text": "This",
+      "startMs": 44275,
+      "endMs": 44620
+    },
+    {
+      "text": "is",
+      "startMs": 44660,
+      "endMs": 45005
+    },
+    {
+      "text": "the",
+      "startMs": 45045,
+      "endMs": 45390
+    },
+    {
+      "text": "same",
+      "startMs": 45430,
+      "endMs": 45775
+    },
+    {
+      "text": "shit",
+      "startMs": 45815,
+      "endMs": 46160
+    },
+    {
+      "text": "they",
+      "startMs": 46200,
+      "endMs": 46545
+    },
+    {
+      "text": "pulled",
+      "startMs": 46585,
+      "endMs": 46930
+    },
+    {
+      "text": "last",
+      "startMs": 46970,
+      "endMs": 47315
+    },
+    {
+      "text": "season",
+      "startMs": 47355,
+      "endMs": 47700
+    },
+    {
+      "text": "and",
+      "startMs": 47740,
+      "endMs": 48085
+    },
+    {
+      "text": "the",
+      "startMs": 48125,
+      "endMs": 48470
+    },
+    {
+      "text": "exact",
+      "startMs": 48510,
+      "endMs": 48855
+    },
+    {
+      "text": "same",
+      "startMs": 48895,
+      "endMs": 49240
+    },
+    {
+      "text": "shit",
+      "startMs": 49280,
+      "endMs": 49625
+    },
+    {
+      "text": "the",
+      "startMs": 49665,
+      "endMs": 50010
+    },
+    {
+      "text": "season",
+      "startMs": 50050,
+      "endMs": 50395
+    },
+    {
+      "text": "before",
+      "startMs": 50435,
+      "endMs": 50780
+    },
+    {
+      "text": "that",
+      "startMs": 50820,
+      "endMs": 51165
+    },
+    {
+      "text": "and",
+      "startMs": 51205,
+      "endMs": 51550
+    },
+    {
+      "text": "I",
+      "startMs": 51590,
+      "endMs": 51935
+    },
+    {
+      "text": "am",
+      "startMs": 51975,
+      "endMs": 52320
+    },
+    {
+      "text": "so",
+      "startMs": 52360,
+      "endMs": 52705
+    },
+    {
+      "text": "tired",
+      "startMs": 52745,
+      "endMs": 53090
+    },
+    {
+      "text": "of",
+      "startMs": 53130,
+      "endMs": 53475
+    },
+    {
+      "text": "it.",
+      "startMs": 53515,
+      "endMs": 53860
+    },
+    {
+      "text": "It",
+      "startMs": 53900,
+      "endMs": 54245
+    },
+    {
+      "text": "is",
+      "startMs": 54285,
+      "endMs": 54630
+    },
+    {
+      "text": "the",
+      "startMs": 54670,
+      "endMs": 55015
+    },
+    {
+      "text": "same",
+      "startMs": 55055,
+      "endMs": 55400
+    },
+    {
+      "text": "fucking",
+      "startMs": 55440,
+      "endMs": 55785
+    },
+    {
+      "text": "bug.",
+      "startMs": 55825,
+      "endMs": 56170
+    },
+    {
+      "text": "The",
+      "startMs": 56210,
+      "endMs": 56555
+    },
+    {
+      "text": "same",
+      "startMs": 56595,
+      "endMs": 56940
+    },
+    {
+      "text": "fucking",
+      "startMs": 56980,
+      "endMs": 57325
+    },
+    {
+      "text": "bug,",
+      "startMs": 57365,
+      "endMs": 57710
+    },
+    {
+      "text": "shipped",
+      "startMs": 57750,
+      "endMs": 58095
+    },
+    {
+      "text": "twice,",
+      "startMs": 58135,
+      "endMs": 58480
+    },
+    {
+      "text": "in",
+      "startMs": 58520,
+      "endMs": 58865
+    },
+    {
+      "text": "the",
+      "startMs": 58905,
+      "endMs": 59250
+    },
+    {
+      "text": "same",
+      "startMs": 59290,
+      "endMs": 59635
+    },
+    {
+      "text": "fucking",
+      "startMs": 59675,
+      "endMs": 60020
+    },
+    {
+      "text": "quarter,",
+      "startMs": 60060,
+      "endMs": 60405
+    },
+    {
+      "text": "and",
+      "startMs": 60445,
+      "endMs": 60790
+    },
+    {
+      "text": "not",
+      "startMs": 60830,
+      "endMs": 61175
+    },
+    {
+      "text": "one",
+      "startMs": 61215,
+      "endMs": 61560
+    },
+    {
+      "text": "fucking",
+      "startMs": 61600,
+      "endMs": 61945
+    },
+    {
+      "text": "person",
+      "startMs": 61985,
+      "endMs": 62330
+    },
+    {
+      "text": "at",
+      "startMs": 62370,
+      "endMs": 62715
+    },
+    {
+      "text": "that",
+      "startMs": 62755,
+      "endMs": 63100
+    },
+    {
+      "text": "studio",
+      "startMs": 63140,
+      "endMs": 63485
+    },
+    {
+      "text": "thought",
+      "startMs": 63525,
+      "endMs": 63870
+    },
+    {
+      "text": "to",
+      "startMs": 63910,
+      "endMs": 64255
+    },
+    {
+      "text": "check.",
+      "startMs": 64295,
+      "endMs": 64640
+    },
+    {
+      "text": "Absolute",
+      "startMs": 64680,
+      "endMs": 65025
+    },
+    {
+      "text": "shit",
+      "startMs": 65065,
+      "endMs": 65410
+    },
+    {
+      "text": "show.",
+      "startMs": 65450,
+      "endMs": 65795
+    },
+    {
+      "text": "Anyway.",
+      "startMs": 65835,
+      "endMs": 66180
+    },
+    {
+      "text": "Let",
+      "startMs": 66220,
+      "endMs": 66565
+    },
+    {
+      "text": "me",
+      "startMs": 66605,
+      "endMs": 66950
+    },
+    {
+      "text": "calm",
+      "startMs": 66990,
+      "endMs": 67335
+    },
+    {
+      "text": "down",
+      "startMs": 67375,
+      "endMs": 67720
+    },
+    {
+      "text": "and",
+      "startMs": 67760,
+      "endMs": 68105
+    },
+    {
+      "text": "get",
+      "startMs": 68145,
+      "endMs": 68490
+    },
+    {
+      "text": "back",
+      "startMs": 68530,
+      "endMs": 68875
+    },
+    {
+      "text": "to",
+      "startMs": 68915,
+      "endMs": 69260
+    },
+    {
+      "text": "the",
+      "startMs": 69300,
+      "endMs": 69645
+    },
+    {
+      "text": "actual",
+      "startMs": 69685,
+      "endMs": 70030
+    },
+    {
+      "text": "analysis",
+      "startMs": 70070,
+      "endMs": 70415
+    },
+    {
+      "text": "because",
+      "startMs": 70455,
+      "endMs": 70800
+    },
+    {
+      "text": "there",
+      "startMs": 70840,
+      "endMs": 71185
+    },
+    {
+      "text": "is",
+      "startMs": 71225,
+      "endMs": 71570
+    },
+    {
+      "text": "a",
+      "startMs": 71610,
+      "endMs": 71955
+    },
+    {
+      "text": "serious",
+      "startMs": 71995,
+      "endMs": 72340
+    },
+    {
+      "text": "point",
+      "startMs": 72380,
+      "endMs": 72725
+    },
+    {
+      "text": "underneath",
+      "startMs": 72765,
+      "endMs": 73110
+    },
+    {
+      "text": "all",
+      "startMs": 73150,
+      "endMs": 73495
+    },
+    {
+      "text": "of",
+      "startMs": 73535,
+      "endMs": 73880
+    },
+    {
+      "text": "this.",
+      "startMs": 73920,
+      "endMs": 74265
+    },
+    {
+      "text": "The",
+      "startMs": 74305,
+      "endMs": 74650
+    },
+    {
+      "text": "engineering",
+      "startMs": 74690,
+      "endMs": 75035
+    },
+    {
+      "text": "culture",
+      "startMs": 75075,
+      "endMs": 75420
+    },
+    {
+      "text": "question",
+      "startMs": 75460,
+      "endMs": 75805
+    },
+    {
+      "text": "is",
+      "startMs": 75845,
+      "endMs": 76190
+    },
+    {
+      "text": "real",
+      "startMs": 76230,
+      "endMs": 76575
+    },
+    {
+      "text": "and",
+      "startMs": 76615,
+      "endMs": 76960
+    },
+    {
+      "text": "it",
+      "startMs": 77000,
+      "endMs": 77345
+    },
+    {
+      "text": "is",
+      "startMs": 77385,
+      "endMs": 77730
+    },
+    {
+      "text": "worth",
+      "startMs": 77770,
+      "endMs": 78115
+    },
+    {
+      "text": "taking",
+      "startMs": 78155,
+      "endMs": 78500
+    },
+    {
+      "text": "seriously.",
+      "startMs": 78540,
+      "endMs": 78885
+    },
+    {
+      "text": "Moving",
+      "startMs": 78925,
+      "endMs": 79270
+    },
+    {
+      "text": "on",
+      "startMs": 79310,
+      "endMs": 79655
+    },
+    {
+      "text": "to",
+      "startMs": 79695,
+      "endMs": 80040
+    },
+    {
+      "text": "the",
+      "startMs": 80080,
+      "endMs": 80425
+    },
+    {
+      "text": "second",
+      "startMs": 80465,
+      "endMs": 80810
+    },
+    {
+      "text": "thing",
+      "startMs": 80850,
+      "endMs": 81195
+    },
+    {
+      "text": "I",
+      "startMs": 81235,
+      "endMs": 81580
+    },
+    {
+      "text": "wanted",
+      "startMs": 81620,
+      "endMs": 81965
+    },
+    {
+      "text": "to",
+      "startMs": 82005,
+      "endMs": 82350
+    },
+    {
+      "text": "cover.",
+      "startMs": 82390,
+      "endMs": 82735
+    },
+    {
+      "text": "There",
+      "startMs": 82775,
+      "endMs": 83120
+    },
+    {
+      "text": "was",
+      "startMs": 83160,
+      "endMs": 83505
+    },
+    {
+      "text": "a",
+      "startMs": 83545,
+      "endMs": 83890
+    },
+    {
+      "text": "shooting",
+      "startMs": 83930,
+      "endMs": 84275
+    },
+    {
+      "text": "reported",
+      "startMs": 84315,
+      "endMs": 84660
+    },
+    {
+      "text": "near",
+      "startMs": 84700,
+      "endMs": 85045
+    },
+    {
+      "text": "the",
+      "startMs": 85085,
+      "endMs": 85430
+    },
+    {
+      "text": "venue",
+      "startMs": 85470,
+      "endMs": 85815
+    },
+    {
+      "text": "on",
+      "startMs": 85855,
+      "endMs": 86200
+    },
+    {
+      "text": "Saturday",
+      "startMs": 86240,
+      "endMs": 86585
+    },
+    {
+      "text": "and",
+      "startMs": 86625,
+      "endMs": 86970
+    },
+    {
+      "text": "the",
+      "startMs": 87010,
+      "endMs": 87355
+    },
+    {
+      "text": "community",
+      "startMs": 87395,
+      "endMs": 87740
+    },
+    {
+      "text": "response",
+      "startMs": 87780,
+      "endMs": 88125
+    },
+    {
+      "text": "has",
+      "startMs": 88165,
+      "endMs": 88510
+    },
+    {
+      "text": "been",
+      "startMs": 88550,
+      "endMs": 88895
+    },
+    {
+      "text": "genuinely",
+      "startMs": 88935,
+      "endMs": 89280
+    },
+    {
+      "text": "difficult",
+      "startMs": 89320,
+      "endMs": 89665
+    },
+    {
+      "text": "to",
+      "startMs": 89705,
+      "endMs": 90050
+    },
+    {
+      "text": "watch.",
+      "startMs": 90090,
+      "endMs": 90435
+    },
+    {
+      "text": "The",
+      "startMs": 90475,
+      "endMs": 90820
+    },
+    {
+      "text": "gunman",
+      "startMs": 90860,
+      "endMs": 91205
+    },
+    {
+      "text": "was",
+      "startMs": 91245,
+      "endMs": 91590
+    },
+    {
+      "text": "named",
+      "startMs": 91630,
+      "endMs": 91975
+    },
+    {
+      "text": "on",
+      "startMs": 92015,
+      "endMs": 92360
+    },
+    {
+      "text": "Sunday.",
+      "startMs": 92400,
+      "endMs": 92745
+    },
+    {
+      "text": "The",
+      "startMs": 92785,
+      "endMs": 93130
+    },
+    {
+      "text": "death",
+      "startMs": 93170,
+      "endMs": 93515
+    },
+    {
+      "text": "toll",
+      "startMs": 93555,
+      "endMs": 93900
+    },
+    {
+      "text": "has",
+      "startMs": 93940,
+      "endMs": 94285
+    },
+    {
+      "text": "been",
+      "startMs": 94325,
+      "endMs": 94670
+    },
+    {
+      "text": "revised",
+      "startMs": 94710,
+      "endMs": 95055
+    },
+    {
+      "text": "twice",
+      "startMs": 95095,
+      "endMs": 95440
+    },
+    {
+      "text": "since",
+      "startMs": 95480,
+      "endMs": 95825
+    },
+    {
+      "text": "then",
+      "startMs": 95865,
+      "endMs": 96210
+    },
+    {
+      "text": "and",
+      "startMs": 96250,
+      "endMs": 96595
+    },
+    {
+      "text": "the",
+      "startMs": 96635,
+      "endMs": 96980
+    },
+    {
+      "text": "victims",
+      "startMs": 97020,
+      "endMs": 97365
+    },
+    {
+      "text": "are",
+      "startMs": 97405,
+      "endMs": 97750
+    },
+    {
+      "text": "still",
+      "startMs": 97790,
+      "endMs": 98135
+    },
+    {
+      "text": "being",
+      "startMs": 98175,
+      "endMs": 98520
+    },
+    {
+      "text": "identified.",
+      "startMs": 98560,
+      "endMs": 98905
+    },
+    {
+      "text": "A",
+      "startMs": 98945,
+      "endMs": 99290
+    },
+    {
+      "text": "memorial",
+      "startMs": 99330,
+      "endMs": 99675
+    },
+    {
+      "text": "has",
+      "startMs": 99715,
+      "endMs": 100060
+    },
+    {
+      "text": "been",
+      "startMs": 100100,
+      "endMs": 100445
+    },
+    {
+      "text": "set",
+      "startMs": 100485,
+      "endMs": 100830
+    },
+    {
+      "text": "up",
+      "startMs": 100870,
+      "endMs": 101215
+    },
+    {
+      "text": "outside",
+      "startMs": 101255,
+      "endMs": 101600
+    },
+    {
+      "text": "and",
+      "startMs": 101640,
+      "endMs": 101985
+    },
+    {
+      "text": "the",
+      "startMs": 102025,
+      "endMs": 102370
+    },
+    {
+      "text": "tragedy",
+      "startMs": 102410,
+      "endMs": 102755
+    },
+    {
+      "text": "has",
+      "startMs": 102795,
+      "endMs": 103140
+    },
+    {
+      "text": "understandably",
+      "startMs": 103180,
+      "endMs": 103525
+    },
+    {
+      "text": "overshadowed",
+      "startMs": 103565,
+      "endMs": 103910
+    },
+    {
+      "text": "everything",
+      "startMs": 103950,
+      "endMs": 104295
+    },
+    {
+      "text": "else",
+      "startMs": 104335,
+      "endMs": 104680
+    },
+    {
+      "text": "that",
+      "startMs": 104720,
+      "endMs": 105065
+    },
+    {
+      "text": "happened",
+      "startMs": 105105,
+      "endMs": 105450
+    },
+    {
+      "text": "that",
+      "startMs": 105490,
+      "endMs": 105835
+    },
+    {
+      "text": "weekend.",
+      "startMs": 105875,
+      "endMs": 106220
+    },
+    {
+      "text": "I",
+      "startMs": 106260,
+      "endMs": 106605
+    },
+    {
+      "text": "want",
+      "startMs": 106645,
+      "endMs": 106990
+    },
+    {
+      "text": "to",
+      "startMs": 107030,
+      "endMs": 107375
+    },
+    {
+      "text": "be",
+      "startMs": 107415,
+      "endMs": 107760
+    },
+    {
+      "text": "careful",
+      "startMs": 107800,
+      "endMs": 108145
+    },
+    {
+      "text": "here",
+      "startMs": 108185,
+      "endMs": 108530
+    },
+    {
+      "text": "because",
+      "startMs": 108570,
+      "endMs": 108915
+    },
+    {
+      "text": "there",
+      "startMs": 108955,
+      "endMs": 109300
+    },
+    {
+      "text": "are",
+      "startMs": 109340,
+      "endMs": 109685
+    },
+    {
+      "text": "families",
+      "startMs": 109725,
+      "endMs": 110070
+    },
+    {
+      "text": "involved.",
+      "startMs": 110110,
+      "endMs": 110455
+    },
+    {
+      "text": "So",
+      "startMs": 110495,
+      "endMs": 110840
+    },
+    {
+      "text": "that",
+      "startMs": 110880,
+      "endMs": 111225
+    },
+    {
+      "text": "is",
+      "startMs": 111265,
+      "endMs": 111610
+    },
+    {
+      "text": "where",
+      "startMs": 111650,
+      "endMs": 111995
+    },
+    {
+      "text": "things",
+      "startMs": 112035,
+      "endMs": 112380
+    },
+    {
+      "text": "stand.",
+      "startMs": 112420,
+      "endMs": 112765
+    },
+    {
+      "text": "Let",
+      "startMs": 112805,
+      "endMs": 113150
+    },
+    {
+      "text": "me",
+      "startMs": 113190,
+      "endMs": 113535
+    },
+    {
+      "text": "know",
+      "startMs": 113575,
+      "endMs": 113920
+    },
+    {
+      "text": "what",
+      "startMs": 113960,
+      "endMs": 114305
+    },
+    {
+      "text": "you",
+      "startMs": 114345,
+      "endMs": 114690
+    },
+    {
+      "text": "think",
+      "startMs": 114730,
+      "endMs": 115075
+    },
+    {
+      "text": "in",
+      "startMs": 115115,
+      "endMs": 115460
+    },
+    {
+      "text": "the",
+      "startMs": 115500,
+      "endMs": 115845
+    },
+    {
+      "text": "comments",
+      "startMs": 115885,
+      "endMs": 116230
+    },
+    {
+      "text": "and",
+      "startMs": 116270,
+      "endMs": 116615
+    },
+    {
+      "text": "I",
+      "startMs": 116655,
+      "endMs": 117000
+    },
+    {
+      "text": "will",
+      "startMs": 117040,
+      "endMs": 117385
+    },
+    {
+      "text": "see",
+      "startMs": 117425,
+      "endMs": 117770
+    },
+    {
+      "text": "you",
+      "startMs": 117810,
+      "endMs": 118155
+    },
+    {
+      "text": "in",
+      "startMs": 118195,
+      "endMs": 118540
+    },
+    {
+      "text": "the",
+      "startMs": 118580,
+      "endMs": 118925
+    },
+    {
+      "text": "next",
+      "startMs": 118965,
+      "endMs": 119310
+    },
+    {
+      "text": "one.",
+      "startMs": 119350,
+      "endMs": 119695
+    }
+  ],
+  "segments": [
+    {
+      "text": "Right, welcome back.",
+      "startMs": 0,
+      "endMs": 1115
+    },
+    {
+      "text": "Fuck, I have been waiting three weeks to talk about this one.",
+      "startMs": 1155,
+      "endMs": 5735
+    },
+    {
+      "text": "Grab a drink and settle in because we are going long today.",
+      "startMs": 5775,
+      "endMs": 10355
+    },
+    {
+      "text": "The patch notes dropped on Tuesday and honestly the first read was fine.",
+      "startMs": 10395,
+      "endMs": 15360
+    },
+    {
+      "text": "Nothing alarming.",
+      "startMs": 15400,
+      "endMs": 16130
+    },
+    {
+      "text": "Then people started testing it and the wheels came off almost immediately.",
+      "startMs": 16170,
+      "endMs": 20750
+    },
+    {
+      "text": "So let me walk you through what actually happened and why the studio response has been so strange.",
+      "startMs": 20790,
+      "endMs": 27680
+    },
+    {
+      "text": "First the timeline.",
+      "startMs": 27720,
+      "endMs": 28835
+    },
+    {
+      "text": "On Tuesday morning the notes go up.",
+      "startMs": 28875,
+      "endMs": 31530
+    },
+    {
+      "text": "By lunchtime three separate creators have reproduced the bug on stream.",
+      "startMs": 31570,
+      "endMs": 35765
+    },
+    {
+      "text": "By Tuesday night it is trending.",
+      "startMs": 35805,
+      "endMs": 38075
+    },
+    {
+      "text": "Now here is where it gets stupid.",
+      "startMs": 38115,
+      "endMs": 40770
+    },
+    {
+      "text": "What the hell is this.",
+      "startMs": 40810,
+      "endMs": 42695
+    },
+    {
+      "text": "Are you shitting me.",
+      "startMs": 42735,
+      "endMs": 44235
+    },
+    {
+      "text": "This is the same shit they pulled last season and the exact same shit the season before that and I am so tired of it.",
+      "startMs": 44275,
+      "endMs": 53860
+    },
+    {
+      "text": "It is the same fucking bug.",
+      "startMs": 53900,
+      "endMs": 56170
+    },
+    {
+      "text": "The same fucking bug, shipped twice, in the same fucking quarter, and not one fucking person at that studio thought to check.",
+      "startMs": 56210,
+      "endMs": 64640
+    },
+    {
+      "text": "Absolute shit show.",
+      "startMs": 64680,
+      "endMs": 65795
+    },
+    {
+      "text": "Anyway.",
+      "startMs": 65835,
+      "endMs": 66180
+    },
+    {
+      "text": "Let me calm down and get back to the actual analysis because there is a serious point underneath all of this.",
+      "startMs": 66220,
+      "endMs": 74265
+    },
+    {
+      "text": "The engineering culture question is real and it is worth taking seriously.",
+      "startMs": 74305,
+      "endMs": 78885
+    },
+    {
+      "text": "Moving on to the second thing I wanted to cover.",
+      "startMs": 78925,
+      "endMs": 82735
+    },
+    {
+      "text": "There was a shooting reported near the venue on Saturday and the community response has been genuinely difficult to watch.",
+      "startMs": 82775,
+      "endMs": 90435
+    },
+    {
+      "text": "The gunman was named on Sunday.",
+      "startMs": 90475,
+      "endMs": 92745
+    },
+    {
+      "text": "The death toll has been revised twice since then and the victims are still being identified.",
+      "startMs": 92785,
+      "endMs": 98905
+    },
+    {
+      "text": "A memorial has been set up outside and the tragedy has understandably overshadowed everything else that happened that weekend.",
+      "startMs": 98945,
+      "endMs": 106220
+    },
+    {
+      "text": "I want to be careful here because there are families involved.",
+      "startMs": 106260,
+      "endMs": 110455
+    },
+    {
+      "text": "So that is where things stand.",
+      "startMs": 110495,
+      "endMs": 112765
+    },
+    {
+      "text": "Let me know what you think in the comments and I will see you in the next one.",
+      "startMs": 112805,
+      "endMs": 119695
+    }
+  ]
+}
