@@ -1,0 +1,30 @@
+{
+  "status": "red",
+  "headline": "Predicted risk: No ads (Red)",
+  "drivers": [
+    "f_demo_pkg",
+    "f_demo_focus",
+    "f_demo_density"
+  ],
+  "confidence": "medium",
+  "counts": {
+    "no_ads": 2,
+    "limited_ads": 1,
+    "advisory": 0
+  },
+  "revenueAtRisk": {
+    "low": 90,
+    "high": 400,
+    "currency": "USD",
+    "assumption": "Range, not a prediction. Assumes 50,000 views at USD 2-8 RPM, and that \"no_ads\" content loses 90-100% of ad revenue. YouTube publishes no percentage for what limited ads costs, so that last number is our assumption and yours to change. Every input on this line is editable.",
+    "editable": true,
+    "inputs": {
+      "expectedViews": 50000,
+      "rpmLow": 2,
+      "rpmHigh": 8,
+      "lossShareLow": 0.9,
+      "lossShareHigh": 1
+    }
+  },
+  "disclaimer": "Greenlight locates spans and cites clauses. It does not predict YouTube's decision. YouTube reviews the whole video in context, its systems can be wrong, and it makes the final call."
+}

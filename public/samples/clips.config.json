@@ -1,0 +1,47 @@
+{
+  "$comment": [
+    "The three judge-mode clips. Record your OWN footage into this directory,",
+    "60-90 seconds each, then run `npm run samples`.",
+    "",
+    "Each clip deliberately plants risks so the report has something true to say.",
+    "Keep every file under 25MB so the repo stays clonable."
+  ],
+  "clips": [
+    {
+      "id": "gaming",
+      "file": "clip-a-gaming.mp4",
+      "label": "Gaming commentary",
+      "description": "One strong word in the opening seconds, then a genuine profanity cluster later on.",
+      "title": "This boss fight is actually broken",
+      "plantedRisks": [
+        "strong profanity at ~0:02 (must be CLEARED, not flagged)",
+        "four strong terms between 0:40 and 0:50",
+        "on-screen violence"
+      ]
+    },
+    {
+      "id": "commentary",
+      "file": "clip-b-commentary.mp4",
+      "label": "Commentary",
+      "description": "Sustained focus on a sensitive topic, plus a visible alcohol brand.",
+      "title": "We need to talk about what happened",
+      "plantedRisks": [
+        "sustained sensitive-events focus from ~0:30",
+        "one isolated profanity",
+        "visible alcohol brand"
+      ]
+    },
+    {
+      "id": "news",
+      "file": "clip-c-news.mp4",
+      "label": "News reaction",
+      "description": "Tragedy references in the body and a profane word in the planned title.",
+      "title": "What the fuck is actually going on here",
+      "plantedRisks": [
+        "tragedy references from ~0:20",
+        "one profanity in the body",
+        "profanity in the TITLE (no ads at every advertiser setting)"
+      ]
+    }
+  ]
+}

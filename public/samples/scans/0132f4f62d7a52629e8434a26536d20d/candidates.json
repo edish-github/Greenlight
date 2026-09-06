@@ -1,0 +1,21 @@
+[
+  {
+    "id": "pac_bb5cd840d2",
+    "detector": "packaging",
+    "surface": "title",
+    "startMs": 0,
+    "endMs": 0,
+    "evidence": "this patch is a fucking disaster",
+    "evidenceType": "packaging",
+    "categories": [
+      "inappropriate_language"
+    ],
+    "metrics": {
+      "surface": "title",
+      "occurrences": 1,
+      "tiers": "strong",
+      "obscured_terms": 0,
+      "matched": "fucking"
+    }
+  }
+]

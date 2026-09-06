@@ -1,0 +1,42 @@
+{
+  "id": "0132f4f62d7a52629e8434a26536d20d",
+  "createdAt": "2026-09-06T21:10:13.149Z",
+  "status": "complete",
+  "packVersion": "2026.09.01",
+  "packId": "youtube-afg",
+  "durationMs": 20000,
+  "sourceName": "clip-placeholder.mp4",
+  "fileHash": "e2827ddceadf9fd3a8514390346e145b51dc2c64216ef5bfe24711bb913f5dfc",
+  "title": "this patch is a fucking disaster",
+  "thumbHash": null,
+  "degraded": [
+    "asr_unavailable",
+    "visual_unavailable",
+    "adjudication_unavailable"
+  ],
+  "timings": {
+    "demuxing": 2474,
+    "transcribing": 38,
+    "detecting": 3,
+    "adjudicating": 0,
+    "scoring": 24,
+    "total": 2544
+  },
+  "counts": {
+    "words": 0,
+    "candidates": 5,
+    "findings": 3,
+    "drops": 0
+  },
+  "probe": {
+    "durationMs": 20000,
+    "sizeBytes": 205223,
+    "hasAudio": true,
+    "hasVideo": true,
+    "width": 854,
+    "height": 480,
+    "fps": 25,
+    "videoCodec": "h264",
+    "audioCodec": "aac"
+  }
+}

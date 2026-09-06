@@ -1,0 +1,18 @@
+{
+  "packVersion": "2026.09.01",
+  "bakedAt": "2026-09-06T21:10:15.697Z",
+  "clips": [
+    {
+      "id": "placeholder",
+      "label": "Placeholder walkthrough",
+      "description": "Test-pattern footage with hand-written findings, so the report screen works with no keys. Not a real scan. Delete before recording the demo.",
+      "scanId": "0132f4f62d7a52629e8434a26536d20d",
+      "durationMs": 20000,
+      "plantedRisks": [
+        "profane title",
+        "profanity cluster at 0:05",
+        "sensitive-events focus at 0:12"
+      ]
+    }
+  ]
+}
