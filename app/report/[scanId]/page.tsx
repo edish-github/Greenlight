@@ -11,6 +11,7 @@ import FixBar from '../../../components/FixBar';
 import PlayerPane from '../../../components/PlayerPane';
 import RiskTimeline from '../../../components/RiskTimeline';
 import ScanProgress from '../../../components/ScanProgress';
+import SelfCertSheet from '../../../components/SelfCertSheet';
 import VerdictHeader from '../../../components/VerdictHeader';
 import { useUIStore } from '../../../src/store/ui';
 import type { Candidate, Finding } from '../../../src/types/finding';
@@ -185,6 +186,8 @@ export default function ReportPage({ params }: { params: Promise<{ scanId: strin
                 ) : null}
               </div>
             </div>
+
+            <SelfCertSheet findings={findings} />
 
             {isRescan && parent ? (
               <BeforeAfter
