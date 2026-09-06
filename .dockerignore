@@ -1,0 +1,10 @@
+node_modules
+.next
+scans
+.git
+.env
+.env.*
+!.env.example
+*.log
+docs/diagrams/src
+research

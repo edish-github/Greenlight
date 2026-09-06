@@ -26,3 +26,8 @@ footage/
 # Local research, spec bundle, and setup status guides (do not commit)
 research/
 docs/PHASE-*.md
+docs/DEMO-VIDEO-SCRIPT.md
+docs/DEVPOST-SUBMISSION.md
+docs/*JUDGE*
+docs/*QA*
+docs/*STATUS*
