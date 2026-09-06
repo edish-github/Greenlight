@@ -1,0 +1,28 @@
+node_modules/
+.next/
+out/
+dist/
+*.tsbuildinfo
+
+.env
+.env.*
+!.env.example
+
+scans/
+*.wav
+*.log
+
+# raw source footage never goes in the repo; only the trimmed sample clips do
+footage/
+*.mov
+*.mkv
+
+.DS_Store
+
+# working scan state is disposable; the BAKED judge-mode scans under
+# public/samples/scans/ are committed on purpose and must not be ignored
+!public/samples/scans/
+
+# Local research, spec bundle, and setup status guides (do not commit)
+research/
+docs/PHASE-*.md
