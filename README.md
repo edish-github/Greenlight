@@ -88,6 +88,8 @@ That first line is the core product. The word is detected, handed to the adjudic
 
 ## Architecture
 
+> 📖 *For the full in-depth 18-section specification, data contracts, and module boundaries, see [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).*
+
 **Policy is data, not model memory.** Every clause lives in a versioned, machine-readable YAML pack (`youtube-afg-2026.09.yaml`) with an ID, an effective date, a severity tier, a surface definition, a detector type, a remediation type, and a source anchor.
 
 Deterministic local detectors generate candidate spans for free in under 100ms — high recall, deliberately low precision. The model's only job is to adjudicate: it sees one candidate, the clause text for that candidate's category, and a ±20s transcript window. It has no web access, is never handed the full corpus, and is told explicitly that the clause block is the complete current rule set.
