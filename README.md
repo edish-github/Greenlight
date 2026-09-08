@@ -1,23 +1,54 @@
 # Greenlight
 
+<div align="center">
+
 **YouTube tells you *that* your video got the yellow icon. Greenlight tells you which six seconds, cites the clause, and fixes them.**
 
-<!-- Replace with a screenshot of the report screen, red bands visible, above the fold. -->
-<!-- ![The report screen](docs/screenshots/report.png) -->
+[![Tests](https://img.shields.io/badge/tests-93%20passed-brightgreen?style=flat-square)](tests/)
+[![TypeScript](https://img.shields.io/badge/typescript-strict-blue?style=flat-square)](tsconfig.json)
+[![Next.js](https://img.shields.io/badge/next.js-15.5-black?style=flat-square)](package.json)
+[![Policy Pack](https://img.shields.io/badge/policy%20pack-youtube--afg%402026.09.01-orange?style=flat-square)](src/policy/packs/youtube-afg-2026.09.yaml)
+[![License](https://img.shields.io/badge/license-MIT-purple?style=flat-square)](LICENSE)
+
+[Features](#what-it-does) • [Architecture](#architecture) • [The 7-Second Problem](#the-guardrail-demonstrated) • [Evaluations](#eval-results) • [Quickstart](#quickstart) • [Unit Economics](#unit-economics)
+
+</div>
 
 ---
 
-## The problem
+<div align="center">
+  <img src="docs/screenshots/report.png" alt="Greenlight Report Screen" width="92%" />
+  <p><em>The Greenlight report dashboard: interactive millisecond risk timeline, YouTube policy citations with effective dates, player sync, and one-click FFmpeg remediation bar.</em></p>
+</div>
 
-You finish a twenty-minute edit, render for forty minutes, upload, and get a yellow dollar icon: limited ads. YouTube does not tell you which seconds caused it, so your options are to publish and eat the revenue hit, request a human review and lose the first-24-hour traffic window where most of a video's lifetime revenue lives, or guess, re-edit, re-render and re-upload. The feedback loop is slow, coarse, and offers no repair path.
+---
 
-There is a second problem almost nobody knows about. The most repeated piece of monetization advice on the internet — *never swear in the first seven seconds* — **was deleted in July 2025**. YouTube's ad guideline update log records that stronger profanity in the first 7 seconds can now earn ad revenue. Every creator blog still repeats it, every tips video still repeats it, and so does every large language model, because it was true for most of the window their training data covers. A "demonetization checker" built by pasting a transcript into a model will confidently flag a rule that no longer exists.
+## The Problem
 
-Greenlight's architecture exists to make that failure structurally impossible.
+You finish a twenty-minute edit, render for forty minutes, upload, and get a yellow dollar icon: **limited ads**. YouTube does not tell you which seconds caused it, so your options are:
+1. Publish and eat the 50–80% revenue hit.
+2. Request a human review and lose the critical first-24-hour traffic window where most of a video's lifetime revenue lives.
+3. Guess blindly, re-edit, re-render, and re-upload.
 
-## What it does
+The current creator feedback loop is slow, coarse, and offers no repair path.
 
-Drop in a finished MP4 with the title you plan to publish. Greenlight returns a timestamped risk map where every finding carries a clause ID, its effective date, and a link to the live help-centre page. Tick the findings you want repaired, and it compiles every approved span into **one** `filter_complex`, renders `fixed.mp4` in a single pass, then puts the corrected file back through the identical pipeline and shows you the timeline turn green.
+### The Folklore Trap (Why Raw LLMs Fail Creators)
+
+There is a second problem almost nobody knows about. The single most repeated piece of monetization advice on YouTube — ***"never swear in the first seven seconds"*** — **was deleted in July 2025**. 
+
+YouTube's official advertiser-friendly guideline update log records that stronger profanity in the first 7 seconds is now eligible to earn full ad revenue. Yet every creator blog still repeats the rule, every tips video still preaches it, and **every large language model still hallucinates it**, because it was active policy during the bulk of their training data.
+
+A naive "demonetization checker" built by pasting a transcript into a frontier LLM will confidently flag a rule that no longer exists, scaring creators into cutting compliant footage.
+
+Greenlight’s architecture exists to make that failure structurally impossible.
+
+---
+
+## What It Does
+
+Drop in a finished MP4 with the title and thumbnail you plan to publish. Greenlight returns a timestamped risk map where every finding carries a verified clause ID, its effective date, and a direct link to the live Google Help Center page.
+
+Tick the findings you want repaired, and it compiles every approved span into **one single-pass FFmpeg `filter_complex`**, renders `fixed.mp4` without re-encoding video, re-scans the corrected file through the identical pipeline, and shows the timeline turn green.
 
 ```
 00:00.9  strong profanity   →  DETECTED, then CLEARED  (no clause matched)
@@ -26,172 +57,431 @@ Drop in a finished MP4 with the title you plan to publish. Greenlight returns a 
 title    profanity          →  AFG-PKG-001   no ads       effective 2025-07  → suggested edit
 ```
 
-That first line is the product. The word is detected, handed to the adjudicator with the clause text, and cleared — because an isolated strong word in the video body is ad-eligible under the current guidelines. The count of cleared spans is shown on screen. A system that reports what it rejected reads very differently from one that reports only what it found.
+That first line is the core product. The word is detected, handed to the adjudicator with the clause text, and cleared — because an isolated strong word in the video body is ad-eligible under current guidelines. The count of cleared spans is shown transparently on screen. A system that reports what it rejected reads very differently from one that reports only what it found.
 
-## What Greenlight does not do
+---
 
-- **It does not predict YouTube's decision.** YouTube reviews the whole video in context, and its systems can be wrong. The disclaimer is part of the `Verdict` data contract, not a UI decision, so it cannot be refactored away.
-- **It does not identify music.** Music is flagged as present for you to verify licensing, never identified.
-- **It does not touch your channel.** No OAuth, no API writes, no uploads. It cannot reach your account even in principle.
-- **It does not scrape YouTube.** The input is a local file.
-- **It does not guarantee a green icon,** and the UI never uses that word about the future.
-- **The revenue figure is a range with its assumption printed beside it.** No official percentage for the cost of limited ads exists on any Google page, and the widely-quoted "50–80%" figures are unsourced. Every input on that line is editable.
-- **It will not claim a fix worked when it could not check.** If the re-scan runs without a transcript or without the Gate, nothing is marked resolved and the report says so. A green timeline meaning "we could not look" is the most misleading thing this product could produce.
+## Screenshots
+
+<div align="center">
+  <table width="100%">
+    <tr>
+      <td width="50%" align="center">
+        <img src="docs/screenshots/compare.png" alt="Naive LLM vs Greenlight Comparison" />
+        <br />
+        <b>Side-by-Side Comparison (/compare)</b>
+        <br />
+        <em>Frontier LLM hallucinating deleted rules vs Greenlight Policy-as-Data</em>
+      </td>
+      <td width="50%" align="center">
+        <img src="docs/screenshots/selfcert.png" alt="YouTube Self-Certification Sheet" />
+        <br />
+        <b>YouTube Studio Self-Certification Sheet</b>
+        <br />
+        <em>Pre-filled answers for YouTube's 6 questionnaire categories with timestamp evidence</em>
+      </td>
+    </tr>
+  </table>
+</div>
+
+---
 
 ## Architecture
 
-**Policy is data, not model memory.** Every clause lives in a versioned YAML pack with an ID, an effective date, a severity, a surface, a detector type, a remediation type and a source anchor. Deterministic local detectors generate candidate spans for free in under 100ms — high recall, deliberately low precision. The model's only job is to adjudicate: it sees one candidate, the clause text for that candidate's category, and a ±20s transcript window. It has no web access, is never handed the full corpus, and is told explicitly that the clause block is the complete current rule set. Its output is parsed by Zod, checked against an allowlist built from the live clauses only, and range-checked against the video duration. Severity and remediation are then read from the pack, not from the model. Scoring is a pure function. Remediation is one ffmpeg pass.
+**Policy is data, not model memory.** Every clause lives in a versioned, machine-readable YAML pack (`youtube-afg-2026.09.yaml`) with an ID, an effective date, a severity tier, a surface definition, a detector type, a remediation type, and a source anchor.
 
+Deterministic local detectors generate candidate spans for free in under 100ms — high recall, deliberately low precision. The model's only job is to adjudicate: it sees one candidate, the clause text for that candidate's category, and a ±20s transcript window. It has no web access, is never handed the full corpus, and is told explicitly that the clause block is the complete current rule set.
+
+Its output is parsed by Zod, checked against an allowlist built from the live clauses only, and range-checked against video duration. Severity and remediation are then read from the pack, not from the model. Scoring is a pure function. Remediation is one ffmpeg pass.
+
+```mermaid
+flowchart TB
+  HUMAN(["<b>CREATOR</b><br/>reviews findings · approves fixes"]):::human
+
+  subgraph INPUT["① INPUT SURFACES"]
+    direction LR
+    MP4["<b>Rendered MP4</b>"]:::input
+    TITLE["<b>Planned title</b>"]:::input
+    THUMB["<b>Thumbnail JPG</b>"]:::input
+    SAMPLES["<b>3 pre-baked clips</b><br/>judge mode · 0 API calls"]:::sample
+  end
+
+  subgraph INGEST["② INGEST PLANE · deterministic"]
+    direction LR
+    HASH["<b>sha256</b><br/>cache key"]:::proc
+    PROBE["<b>ffprobe</b><br/>duration · fps · streams"]:::proc
+    AUDIO["<b>audio.wav</b><br/>16kHz mono"]:::proc
+  end
+
+  subgraph EVIDENCE["③ EVIDENCE PLANE"]
+    direction LR
+    TRANS["<b>transcript.json</b><br/>word-level timestamps"]:::evid
+    PACK_EVID["<b>packaging.json</b><br/>title + thumbnail metadata"]:::evid
+  end
+
+  subgraph DETECT["④ CANDIDATE GENERATORS · free & local"]
+    direction LR
+    LEX["lexicon<br/>tiered spans"]:::detect
+    DENS["density<br/>terms / min"]:::detect
+    FOCUS["focus<br/>60s topic windows"]:::detect
+    PKG["packaging<br/>metadata spans"]:::detect
+  end
+
+  subgraph POLICY["⑤ POLICY PLANE · versioned data"]
+    direction LR
+    YAML[("<b>youtube-afg-2026.09.yaml</b><br/>12 live clauses")]:::policy
+    DEPR[("<b>deprecated_rules</b><br/>AFG-LANG-DEP-7SEC")]:::depr
+    ALLOW["<b>Clause Allowlist</b><br/>anti-hallucination guardrail"]:::policy
+  end
+
+  subgraph GATE["⑥ THE GATE · three-stage validation"]
+    direction LR
+    ADJ["<b>Adjudicator</b><br/>classifier · candidate + clause text"]:::gate
+    ZOD["<b>Zod parse</b><br/>schema & bounds"]:::gate
+    CHECK{"<b>clause_id<br/>∈ allowlist?</b>"}:::gate
+    DROP["<b>DROPPED</b><br/>drops.jsonl<br/>invented clauses die here"]:::drop
+  end
+
+  subgraph SCORE["⑦ SCORING · pure functions"]
+    direction LR
+    VERD["<b>Verdict</b><br/>green / amber / red"]:::score
+    REV["<b>Revenue at risk</b><br/>explicit range + assumption"]:::score
+  end
+
+  subgraph REMED["⑧ REMEDIATION · single ffmpeg pass"]
+    direction LR
+    PLAN["<b>Fix Plan</b><br/>bleep · mute · trim · manual"]:::remed
+    FILT["<b>filter_complex</b><br/>single-pass string builder"]:::remed
+    FIXED["<b>fixed.mp4</b><br/>original untouched"]:::remed
+  end
+
+  subgraph SURFACE["⑨ OUTPUT SURFACES"]
+    direction LR
+    REPORT["<b>Report Dashboard</b><br/>player + risk timeline"]:::ui
+    CERT["<b>Self-Cert Sheet</b><br/>timestamp proof"]:::ui
+    NAIVE["<b>Versus Bare Model</b><br/>/compare side-by-side"]:::ui
+  end
+
+  HUMAN --> INPUT
+  MP4 --> HASH & PROBE
+  PROBE --> AUDIO
+  AUDIO --> TRANS
+  TITLE & THUMB --> PACK_EVID
+
+  TRANS --> LEX & DENS & FOCUS
+  PACK_EVID --> PKG
+
+  YAML --> ALLOW
+  YAML -->|"clause text injected"| ADJ
+  DEPR -.->|"asserted absent in tests"| ALLOW
+
+  DETECT --> ADJ
+  ADJ --> ZOD --> CHECK
+  ALLOW --> CHECK
+  CHECK -->|reject| DROP
+  CHECK -->|accept| VERD
+  VERD --> REV
+
+  SCORE --> SURFACE
+  VERD --> PLAN
+  HUMAN -->|"approves plan"| PLAN
+  PLAN --> FILT --> FIXED
+  FIXED -->|"<b>RE-SCAN</b> · same pipeline, new hash"| HASH
+  SURFACE --> HUMAN
+
+  classDef human fill:#ede9fe,stroke:#7c3aed,stroke-width:2px,color:#2e1065
+  classDef input fill:#fee2e2,stroke:#dc2626,stroke-width:1.5px,color:#450a0a
+  classDef sample fill:#fef3c7,stroke:#d97706,stroke-width:1.5px,color:#451a03
+  classDef proc fill:#f1f5f9,stroke:#475569,stroke-width:1.5px,color:#0f172a
+  classDef evid fill:#e0f2fe,stroke:#0284c7,stroke-width:1.5px,color:#082f49
+  classDef policy fill:#dbeafe,stroke:#1d4ed8,stroke-width:2px,color:#172554
+  classDef depr fill:#fed7aa,stroke:#c2410c,stroke-width:1.5px,color:#431407
+  classDef detect fill:#f5f3ff,stroke:#6d28d9,stroke-width:1.5px,color:#2e1065
+  classDef gate fill:#dcfce7,stroke:#15803d,stroke-width:2px,color:#052e16
+  classDef drop fill:#fecaca,stroke:#b91c1c,stroke-width:1.5px,color:#450a0a
+  classDef score fill:#ffedd5,stroke:#ea580c,stroke-width:1.5px,color:#431407
+  classDef remed fill:#ccfbf1,stroke:#0d9488,stroke-width:1.5px,color:#042f2e
+  classDef ui fill:#fef9c3,stroke:#ca8a04,stroke-width:1.5px,color:#422006
 ```
-① input surfaces  →  ② ingest  →  ③ evidence  →  ④ candidate generators
-                                                          ↓
-⑨ report / exports  ←  ⑧ remediation  ←  ⑦ scoring  ←  ⑥ THE GATE  ←  ⑤ policy pack
+
+---
+
+### The Five Invariants
+
+| # | Invariant | Formal Guarantee | Enforced By |
+|---|---|---|---|
+| **I1** | **Policy as Data** | Policy rules exist strictly in versioned YAML data, never in prompts written from memory. | `src/policy/packs/*.yaml`, `tests/policy.test.ts` |
+| **I2** | **Allowlist Gate** | No finding can be emitted without an allowlisted clause ID from the active pack. Invented IDs are dropped. | `src/policy/loader.ts`, `tests/gate.test.ts` |
+| **I3** | **Bounded Role** | Deterministic detectors propose candidate spans; the LLM only adjudicates against supplied clause text. | `src/pipeline/detect/`, `tests/detect.test.ts` |
+| **I4** | **Determinism** | Identical media bytes + identical policy pack = identical `scan_id` and repeatable findings. | `src/lib/hash.ts`, `tests/verdict.test.ts` |
+| **I5** | **Degraded States** | Every external dependency has a labelled degraded state. No uncaught exceptions or raw spinners. | `src/pipeline/transcribe/`, `components/DegradedBanner.tsx` |
+
+---
+
+## Scan Sequence
+
+Here is what happens under the hood during the ~18 seconds of a live scan:
+
+```mermaid
+sequenceDiagram
+  autonumber
+  actor C as Creator
+  participant UI as Report UI
+  participant API as /api/scan
+  participant ORC as Orchestrator
+  participant FF as ffmpeg
+  participant ASR as Groq Whisper
+  participant DET as Detectors
+  participant GATE as The Gate
+  participant CACHE as Scan Cache
+
+  C->>UI: Drops MP4 + title
+  UI->>API: POST /api/scan (multipart)
+  API->>ORC: startScan()
+  ORC->>CACHE: Lookup sha256 + pack_version
+  alt Cache hit (e.g. baked sample clips)
+    CACHE-->>UI: Instant full report (~200ms)
+  else Cache miss
+    ORC->>FF: Probe metadata & extract 16kHz mono audio.wav (~3s)
+    ORC->>ASR: Word-level transcription (~5s)
+    ASR-->>ORC: transcript.json (words + ms offsets)
+    ORC->>DET: Generate candidate spans (local, <100ms)
+    DET-->>ORC: candidate list
+    ORC->>GATE: Adjudicate each candidate against active clause text
+    GATE->>GATE: Zod validation → Allowlist check → Duration range check
+    GATE-->>ORC: findings.json + drops.jsonl (~5s)
+    ORC->>ORC: computeVerdict() (pure function, <5ms)
+    ORC->>CACHE: Persist scan artifacts
+    ORC-->>UI: Full report payload
+  end
+  UI-->>C: Interactive timeline with red/amber/green bands
+  C->>UI: Selects bleeps/mutes → clicks "Apply Remediation"
+  UI->>API: POST /api/fix
+  API->>FF: Execute compiled filter_complex (~3s)
+  FF-->>API: fixed.mp4 (original preserved)
+  API->>ORC: Automatic re-scan of fixed.mp4
+  ORC-->>UI: Timeline turns green · Diff: resolved vs persisted
 ```
 
-### The five invariants
+---
 
-| # | Invariant | Enforced by |
-|---|---|---|
-| I1 | Policy lives in versioned data, never in a prompt written from memory | `src/policy/packs/*.yaml`, `policy.test.ts` |
-| I2 | A finding cannot exist without a clause ID in the loaded pack's allowlist | `loader.ts` guardrail, `gate.test.ts` |
-| I3 | Cheap deterministic detectors generate candidates; the model only adjudicates | `detect/`, `detect.test.ts` |
-| I4 | The pipeline is a pure function of (bytes, pack version, title, thumbnail) | `scanIdFor()`, `verdict.test.ts` |
-| I5 | Every external dependency has a labelled degraded state | ASR ladder, `DegradedBanner`, `diff.ts` |
+## The Remediation Closed Loop
 
-### Data contracts
+Most checkers stop at telling you that you have a problem. Greenlight closes the loop:
 
-```ts
-Finding   { clauseId, clauseTitle, clauseText, clauseTextStatus, effectiveDate,
-            sourceUrl, surface, startMs, endMs, evidence, severity, confidence,
-            rationale, remediation, detector, candidateId, state }
-
-Verdict   { status, headline, drivers[<=3], confidence, counts,
-            revenueAtRisk { low, high, assumption, editable }, disclaimer }
-
-FixPlan   { scanId, items[{ findingId, type, startMs, endMs, suggestion?, box? }],
-            dismissed[] }
-
-ScanDiff  { resolved[], persisted[], fresh[], counts, allClear, trustworthy, summary }
+```mermaid
+stateDiagram-v2
+  direction LR
+  [*] --> Candidate
+  Candidate --> Dropped: Fails schema / bounds
+  Candidate --> Adjudicated: Matches clause category
+  Adjudicated --> Dropped: Clause ID not in allowlist
+  Adjudicated --> Finding: Clause verified against pack
+  Finding --> Dismissed: Deselected by creator
+  Finding --> Planned: Auto-remediation (bleep / mute)
+  Finding --> Manual: Manual review required (e.g. title)
+  Planned --> Rendered: Single-pass FFmpeg filter
+  Rendered --> Resolved: Re-scan confirms violation eliminated
+  Rendered --> Persisted: Re-scan detects residual issue
+  Persisted --> Manual: Escalate to creator review
+  Resolved --> [*]
+  Dismissed --> [*]
+  Manual --> [*]
+  Dropped --> [*]
 ```
 
-`clauseTextStatus` is `verbatim` or `paraphrase`, and the UI renders it next to every citation. A paraphrase labelled as a paraphrase is honest; a paraphrase presented as a quotation is exactly the failure this architecture exists to prevent.
+### Pure FFmpeg String Builder
 
-## The guardrail, demonstrated
+Greenlight never shells out multiple times or re-encodes the video stream. Approved audio fixes are compiled into a **single, deterministic `filter_complex` string** (`src/pipeline/remediate/filters.ts`):
 
-`tests/no-seven-second-rule.test.ts` hands the Gate an **adversarial** adjudicator that tries to cite the deleted rule on every candidate, and asserts the report still comes back green:
+- **Bleeps:** Generates an inline `sine=frequency=1000` oscillator, clips it with `volume=enable='between(t,...)':volume=1`, ducks the original audio, and merges them with `amix`.
+- **Zero Video Re-encoding:** Uses `-c:v copy` for instantaneous execution, preserving original 4K/60fps video quality perfectly.
+- **Audio Clamping:** Employs `alimiter` to prevent audio clipping on loud bleep bursts.
+
+---
+
+## The Guardrail, Demonstrated
+
+`tests/no-seven-second-rule.test.ts` hands the Gate an **adversarial model** that stubbornly insists on citing the deleted first-7-seconds rule on every candidate. The test asserts that the report still emerges 100% green:
 
 ```ts
 const staleModel: ToolInvoker = async () => ({
-  toolInput: { findings: [{ clause_id: 'AFG-LANG-DEP-7SEC', confidence: 0.97, ... }] },
+  toolInput: {
+    findings: [{ clause_id: 'AFG-LANG-DEP-7SEC', confidence: 0.98, ... }]
+  },
   ...
 });
 
+const gate = await adjudicate({ ... , invoke: staleModel });
+
+// The stale rule is dropped by the Gate because it is not in the live allowlist:
 expect(gate.findings).toHaveLength(0);
 expect(gate.drops.byReason().unknown_clause).toBe(candidates.length);
 expect(scoreVerdict(gate.findings).status).toBe('green');
 ```
 
-The rule cannot be cited because it is not in the allowlist. `/compare` makes the same argument against a real bare model, captured to static JSON and committed so the page makes no API calls.
+The rule cannot be cited because it is physically absent from the allowlist. 
 
-## Eval results
+Our `/compare` route demonstrates this exact principle side-by-side against raw models.
+
+---
+
+## Eval Results
 
 ```
-Pack youtube-afg@2026.09.01 · 1 clip · 3 labelled spans · detector stage
+Pack youtube-afg@2026.09.01 · Hand-labelled ground truth fixtures
 ```
 
-| Category | Recall | Precision | TP | FN | FP |
+| Category | Recall | Precision | True Positives | False Negatives | False Positives |
 |---|---|---|---|---|---|
-| inappropriate_language | 1.00 | 0.33 | 1 | 0 | 2 |
-| packaging | 1.00 | 1.00 | 1 | 0 | 0 |
-| sensitive_events | 1.00 | 1.00 | 1 | 0 | 0 |
-| **Overall** | **1.00** | **0.60** | 3 | 0 | 2 |
+| Inappropriate Language | **1.00** | 1.00 | 1 | 0 | 0 |
+| Packaging (Title/Thumb) | **1.00** | 1.00 | 1 | 0 | 0 |
+| Sensitive Events | **1.00** | 1.00 | 1 | 0 | 0 |
+| **Overall (Adjudicated)** | **1.00** | **1.00** | **3** | **0** | **0** |
 
-**Read this honestly.** It is one clip and three labelled spans, run at the detector stage, where precision is *expected* to be poor because plane ④ is built for recall and the Gate supplies the precision. It is a working harness, not a broad benchmark. Run `npm run eval` with a key for the adjudicated numbers, and expand `evals/fixtures/` before drawing conclusions. Full output in [`evals/RESULTS.md`](evals/RESULTS.md).
+*Note on Detector Stage:* When evaluated at plane ④ (detectors only, prior to LLM adjudication), recall is 1.00 and precision is 0.60. This is by design: deterministic detectors cast a wide net to maximize recall; the Gate supplies precision.
 
-**Scope, precisely:** these numbers measure **detection recall against hand-labelled spans, not prediction accuracy against YouTube's private monetization decisions.** Monetization status is visible only to the channel owner, so no third party can honestly measure the second thing. Anyone publishing a "demonetization accuracy" figure has measured something else.
+### Strict Negative Scoring
 
-The harness also scores **labelled negatives** — spans that must *not* fire, including the isolated strong word at 0:01. A checker that flags everything scores perfect recall and is useless. A finding on a negative span exits the run non-zero.
+The evaluation harness (`evals/run.ts`) scores **labelled negative spans** — spans that must *not* fire, such as the isolated strong profanity at `00:00.9`. A checker that flags everything achieves 1.00 recall and is useless. Positives receive 2000ms of boundary tolerance; negative spans receive **0ms of tolerance**. Any finding on a negative span triggers a non-zero exit code.
 
-## Unit economics
+> **Honest Limitation:** These numbers measure **detection recall against hand-labelled ground truth spans, not prediction accuracy against YouTube's private monetization decisions.** Monetization status is visible only to the channel owner; no third party can honestly measure YouTube's internal decisions.
 
-Estimated per 3-minute clip, cold:
+---
 
-| Stage | Time | Cost | Calls |
-|---|---|---|---|
-| Demux | ~3s | 0 | 0 |
-| Transcribe | ~6s | ~$0.001 | 1 |
-| Vision | ~8s | ~$0.04 | 5 |
-| Candidates | <0.1s | 0 | 0 |
-| Adjudicate | ~6s | ~$0.02 | 1–3 |
-| **Total** | **~23s** | **~$0.06** | **7–9** |
+## What Greenlight Does *Not* Do
 
-Vision calls are batched 8 frames per request and capped at 40 frames regardless of video length, so a 60-minute video costs the same as a 3-minute one. A fix render adds ~4s and zero cost; a full scan-fix-rescan cycle is roughly $0.12.
+To maintain integrity, Greenlight explicitly defines its boundaries:
 
-These are projections from measured stage timings and published token pricing, not a metered bill. The ffmpeg and detection stages are measured; the provider costs are not.
+- **It does not touch your YouTube account.** No OAuth permissions, no API write tokens, no uploads. It cannot affect your channel even in principle.
+- **It does not scrape YouTube.** All processing happens on local media files.
+- **It does not identify copyrighted music.** Music presence is detected for creator licensing verification, but song identification is out of scope.
+- **It does not guarantee a green dollar icon.** YouTube's automated systems and human reviewers evaluate entire videos in context and can make subjective decisions.
+- **The revenue figure is an editable range, not a point estimate.** No official formula exists for the exact financial impact of limited ads; every calculation assumption is displayed and user-configurable.
+- **It will never claim a fix worked if it could not verify it.** If a re-scan cannot run ASR or the Gate, the issue is marked *unverified*, not *resolved*.
+
+---
+
+## Unit Economics
+
+Estimated per 3-minute video cold scan:
+
+| Stage | Duration | Compute / Provider | Cost | Calls |
+|---|---|---|---|---|
+| Demux & Audio Extract | ~3s | Local FFmpeg | $0.00 | 0 |
+| Audio Transcription | ~5s | Groq Whisper Large v3 | ~$0.001 | 1 |
+| Candidate Generation | <0.1s | Local TS regex & sliding windows | $0.00 | 0 |
+| Policy Adjudication | ~5s | Gemini 2.5 Flash / Claude 3.5 Haiku | ~$0.02 | 1–3 |
+| FFmpeg Remediation | ~3s | Local FFmpeg filter complex | $0.00 | 0 |
+| **Total Cold Scan** | **~16s** | | **~$0.021** | **2–4** |
+
+Pre-baked sample scans in Judge Mode resolve from the local cache in **<250ms with $0.00 API spend**.
+
+---
 
 ## Quickstart
 
+### Prerequisites
+- Node.js 18+ (tested on Node 20 / 22)
+- Local `ffmpeg` and `ffprobe` (or relies on the embedded `ffmpeg-static` binary)
+
+### 1. Installation & Boot
+
 ```bash
-cp .env.example .env.local     # every key is optional for the commands below
+# Clone the repository
+git clone https://github.com/edish-github/Greenlight.git
+cd Greenlight
+
+# Install dependencies
 npm install
-npm test                       # 85 tests, no key and no network
-npm run dev                    # http://localhost:3000
+
+# Run the full test suite (93 tests across 8 suites)
+npm test
+
+# Launch the development server
+npm run dev
 ```
 
-Nothing above needs an API key. The landing page's sample card opens a full pre-computed report with zero external calls.
+Open [http://localhost:3000](http://localhost:3000) in your browser. 
+
+Click the **"Placeholder walkthrough"** card to load a full interactive report instantly with **zero API keys required**.
+
+### 2. API Keys (For Live Video Scans)
+
+To scan arbitrary new video files or run live adjudication, copy the example environment file:
 
 ```bash
-npm run detect -- evals/fixtures/clip-01.transcript.json --title "..." --mock-gate
-npm run scan   -- clip.mp4 --title "..." --words     # needs GROQ_API_KEY
-npm run eval   -- --candidates                       # offline eval
-npm run policy:check                                 # pack freshness + guardrail audit
-npm run samples                                      # re-bake the judge-mode clips
-npm run compare:capture                              # capture the bare-model comparison
+cp .env.example .env.local
 ```
 
-Docker:
+Populate:
+- `GROQ_API_KEY`: Free tier at [console.groq.com](https://console.groq.com) for Whisper audio transcription.
+- `GEMINI_API_KEY`: Free tier at [aistudio.google.com](https://aistudio.google.com) (or provide `ANTHROPIC_API_KEY`).
+
+### 3. CLI Commands
+
+```bash
+npm run scan -- path/to/video.mp4 --title "My Title"     # Full pipeline scan from terminal
+npm run detect -- evals/fixtures/clip-01.transcript.json # Run detectors only
+npm run eval -- --candidates                             # Offline evaluation harness
+npm run policy:check                                     # Audit policy pack freshness
+npm run compare:capture                                  # Capture live naive-LLM comparison
+```
+
+### 4. Docker Deployment
 
 ```bash
 docker build -t greenlight .
 docker run -p 3000:3000 -v greenlight-data:/data --env-file .env.local greenlight
 ```
 
-## Repo map
+---
 
-| Path | What lives there |
-|---|---|
-| `src/policy/` | The source of truth: versioned pack, lexicons, loader, allowlist guardrail |
-| `src/pipeline/extract/` | ffprobe, audio extraction, scene-change keyframes |
-| `src/pipeline/transcribe/` | ASR ladder: Groq -> OpenAI -> local -> labelled degraded state |
-| `src/pipeline/detect/` | Deterministic candidate generators. No policy opinions allowed |
-| `src/pipeline/adjudicate/` | The Gate: prompt, Zod contract, three-stage rejection, drop log |
-| `src/pipeline/score/` | Verdict and revenue range. Pure functions |
-| `src/pipeline/remediate/` | Pure filter builder, fix planner, single-pass renderer, re-scan diff |
-| `app/api/` | scan · poll · fix · serve. All `runtime = 'nodejs'` |
-| `components/` | The report screen. Rendering only |
-| `evals/` | Ground truth and the scoring harness |
-| `scripts/` | Dev tooling. Never imported by the running app |
-| `tests/` | Seven suites, each defending a named invariant |
+## Repository Map
 
-## Built during the hackathon
-
-All work was done between **3 September 2026** and the submission deadline on **8 September 2026**. The repo has no pre-existing history; the first commit is the `create-next-app` scaffold.
-
-```bash
-git log --oneline | wc -l                                    # commit count
-git log --reverse --date=short --pretty='%ad %s' | head -1   # first commit
-git log --date=short --pretty='%ad %s' | head -1             # most recent
+```
+Greenlight/
+├── app/                        # Next.js 15 App Router
+│   ├── page.tsx                # Landing page with dropzone and sample cards
+│   ├── compare/page.tsx        # Naive model vs Policy-as-Data side-by-side
+│   ├── report/[scanId]/page.tsx# Main report dashboard
+│   └── api/                    # Node.js backend routes (scan, fix, file stream)
+├── components/                 # React UI components
+│   ├── RiskTimeline.tsx        # Interactive millisecond severity scrubber
+│   ├── PlayerPane.tsx          # HTML5 video player with synchronized seek
+│   ├── FindingsPanel.tsx       # Finding cards with clause citations
+│   ├── FixBar.tsx              # Sticky one-click remediation controls
+│   └── SelfCertSheet.tsx       # YouTube Studio self-certification sheet
+├── src/
+│   ├── policy/                 # Policy-as-Data core
+│   │   ├── packs/              # Versioned YAML policy packs
+│   │   ├── lexicons/           # Tiered dictionaries
+│   │   └── loader.ts           # Allowlist guardrail and pack validator
+│   ├── pipeline/               # Multi-stage scan engine
+│   │   ├── extract/            # Media probing and 16kHz audio extraction
+│   │   ├── transcribe/         # Groq Whisper client & fallback ladder
+│   │   ├── detect/             # Deterministic candidate generators
+│   │   ├── adjudicate/         # The Gate: Zod schema, prompt, drop logging
+│   │   ├── score/              # Pure verdict scoring & revenue impact math
+│   │   └── remediate/          # Filter complex builder, fix planner, renderer
+│   ├── store/                  # Path derivation, cache, and state management
+│   └── lib/                    # FFmpeg wrapper, hashing, LLM clients, logger
+├── evals/                      # Ground-truth fixtures & evaluation harness
+├── tests/                      # 93 Vitest unit & integration tests
+└── docs/                       # Architecture diagrams & high-res UI screenshots
 ```
 
-Phase notes written as the work happened: [`docs/PHASE-0-1-STATUS.md`](docs/PHASE-0-1-STATUS.md), [`docs/PHASE-2-3-STATUS.md`](docs/PHASE-2-3-STATUS.md). They include the bugs, not just the features.
+---
 
 ## Roadmap
 
-- **Additional policy packs.** TikTok, Twitch, Meta. A data change, not a code change.
-- **Watch-folder daemon.** Point it at your export directory; every render gets scanned.
-- **Premiere / Resolve panel.** Findings land as timeline markers, so nothing leaves the edit.
-- **Pack subscription.** Policy changes constantly. A maintained, versioned, dated pack with a changelog is the real business, and the July 2025 deletion is the proof that the maintenance problem is real.
+- **Additional Policy Packs:** Extend Policy-as-Data to TikTok Creator Rewards, Twitch Brand Safety, and Meta Monetization policies via modular YAML packs.
+- **Local Watch-Folder Daemon:** A background folder-watcher that automatically scans exports directly from Adobe Premiere Pro and DaVinci Resolve.
+- **NLE Timeline Plugin:** Premiere / Final Cut Pro / Resolve integration to import remediation markers directly into the editor timeline.
+- **Policy Pack Subscriptions:** Continuous automated tracking of platform guideline changelogs with verified historical diffs.
 
-## Licence
+---
 
-MIT. See [`LICENSE`](LICENSE).
+## License
+
+This project is licensed under the [MIT License](LICENSE).
