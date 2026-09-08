@@ -1,0 +1,129 @@
+---
+title: "Greenlight — System Architecture"
+config:
+  flowchart:
+    curve: basis
+    nodeSpacing: 45
+    rankSpacing: 55
+---
+flowchart TB
+  HUMAN(["<b>CREATOR</b><br/>reviews every finding · approves every fix<br/>the only actor who can publish"]):::human
+
+  subgraph INPUT["① INPUT SURFACES · everything YouTube scores"]
+    direction LR
+    MP4["<b>Rendered MP4</b>"]:::input
+    TITLE["<b>Planned title</b><br/>scored separately"]:::input
+    THUMB["<b>Thumbnail JPG</b><br/>scored separately"]:::input
+    SAMPLES["<b>3 pre-loaded clips</b><br/>results cached · 0 API calls<br/>the judge-mode path"]:::sample
+  end
+
+  subgraph INGEST["② INGEST PLANE · deterministic · no model touches this"]
+    direction LR
+    HASH["<b>sha256</b><br/>cache key for everything"]:::proc
+    PROBE["<b>ffprobe</b><br/>duration · fps · streams"]:::proc
+    AUDIO["<b>audio.wav</b><br/>16kHz mono"]:::proc
+    FRAMES["<b>keyframes</b><br/>scene &gt; 0.4 · cap 40"]:::proc
+  end
+
+  subgraph EVIDENCE["③ EVIDENCE PLANE · raw observations · no policy opinion yet"]
+    direction LR
+    TRANS["<b>transcript.json</b><br/>word-level timestamps"]:::evid
+    VDESC["<b>descriptors.json</b><br/>keyframe labels"]:::evid
+    PACK["<b>packaging.json</b><br/>title + thumbnail OCR"]:::evid
+  end
+
+  subgraph DETECT["④ CANDIDATE GENERATORS · local · free · high recall, low precision"]
+    direction LR
+    LEX["lexicon<br/>tiered spans"]:::detect
+    DENS["density<br/>terms per minute"]:::detect
+    FOCUS["focus<br/>60s topic windows"]:::detect
+    VIS["visual<br/>descriptor match"]:::detect
+    PKG["packaging<br/>title + thumb spans"]:::detect
+  end
+
+  subgraph POLICY["⑤ POLICY PLANE · versioned data · never model memory"]
+    direction LR
+    YAML[("<b>youtube-afg-2026.09.yaml</b><br/>clause id · effective_date · severity<br/>surface · detector · remediation · source")]:::policy
+    DEPR[("<b>deprecated_rules</b><br/>AFG-LANG-DEP-7SEC<br/>removed 2025-07")]:::depr
+    ALLOW["<b>Clause ID allowlist</b><br/>the anti-hallucination guardrail"]:::policy
+  end
+
+  subgraph GATE["⑥ THE GATE · the only path from candidate to finding"]
+    direction LR
+    ADJ["<b>Adjudicator</b><br/>constrained classifier, not a chatbot<br/>sees candidate + clause text only"]:::gate
+    ZOD["<b>Zod validation</b><br/>shape · ranges · enums"]:::gate
+    CHECK{"<b>clause_id<br/>∈ allowlist?</b>"}:::gate
+    DROP["<b>DROPPED</b><br/>drops.jsonl<br/>invented clauses die here"]:::drop
+  end
+
+  subgraph SCORE["⑦ SCORING · aggregation only · no new claims"]
+    direction LR
+    VERD["<b>Verdict</b><br/>green / amber / red<br/>+ top 3 drivers"]:::score
+    REV["<b>Revenue at risk</b><br/>editable range · assumption shown<br/>never a fabricated point estimate"]:::score
+  end
+
+  subgraph REMED["⑧ REMEDIATION · policy-grounded, not guessed"]
+    direction LR
+    PLAN["<b>Fix plan</b><br/>mute · bleep · trim · blur · manual"]:::remed
+    FILT["<b>filter_complex</b><br/>all spans, one ffmpeg pass"]:::remed
+    FIXED["<b>fixed.mp4</b><br/>original untouched"]:::remed
+  end
+
+  subgraph SURFACE["⑨ OUTPUT SURFACES"]
+    direction LR
+    REPORT["<b>Report screen</b><br/>player + risk timeline<br/>citation per finding"]:::ui
+    CERT["<b>Self-cert sheet</b><br/>every answer carries a timestamp"]:::ui
+    NAIVE["<b>Naive-LLM panel</b><br/>the side-by-side proof"]:::ui
+    RJSON["<b>report.json</b>"]:::ui
+  end
+
+  CACHE[("<b>Scan cache</b><br/>sha256 + pack_version")]:::cache
+
+  HUMAN --> INPUT
+  MP4 --> HASH & PROBE
+  PROBE --> AUDIO & FRAMES
+  HASH <--> CACHE
+  SAMPLES -.->|"cache hit · skips ②–⑥"| CACHE
+
+  AUDIO --> TRANS
+  FRAMES --> VDESC
+  TITLE --> PACK
+  THUMB --> PACK
+
+  TRANS --> LEX & DENS & FOCUS
+  VDESC --> VIS
+  PACK --> PKG
+
+  YAML --> ALLOW
+  DEPR -.->|"asserted absent in policy.test.ts"| ALLOW
+  YAML -->|"clause text injected into prompt"| ADJ
+
+  DETECT --> ADJ
+  ADJ --> ZOD --> CHECK
+  ALLOW --> CHECK
+  CHECK -->|reject| DROP
+  CHECK -->|accept| VERD
+  VERD --> REV
+
+  SCORE --> SURFACE
+  VERD --> PLAN
+  HUMAN -->|"approves the plan"| PLAN
+  PLAN --> FILT --> FIXED
+  FIXED -->|"<b>RE-SCAN</b> · same pipeline, new hash"| HASH
+  SURFACE --> HUMAN
+  FIXED --> HUMAN
+
+  classDef human fill:#ede9fe,stroke:#7c3aed,stroke-width:2.5px,color:#2e1065
+  classDef input fill:#fee2e2,stroke:#dc2626,stroke-width:1.5px,color:#450a0a
+  classDef sample fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#451a03
+  classDef proc fill:#f1f5f9,stroke:#475569,stroke-width:1.5px,color:#0f172a
+  classDef evid fill:#e0f2fe,stroke:#0284c7,stroke-width:1.5px,color:#082f49
+  classDef policy fill:#dbeafe,stroke:#1d4ed8,stroke-width:2.5px,color:#172554
+  classDef depr fill:#fed7aa,stroke:#c2410c,stroke-width:2px,color:#431407
+  classDef detect fill:#f5f3ff,stroke:#6d28d9,stroke-width:1.5px,color:#2e1065
+  classDef gate fill:#dcfce7,stroke:#15803d,stroke-width:2.5px,color:#052e16
+  classDef drop fill:#fecaca,stroke:#b91c1c,stroke-width:2px,color:#450a0a
+  classDef score fill:#ffedd5,stroke:#ea580c,stroke-width:1.5px,color:#431407
+  classDef remed fill:#ccfbf1,stroke:#0d9488,stroke-width:1.5px,color:#042f2e
+  classDef ui fill:#fef9c3,stroke:#ca8a04,stroke-width:1.5px,color:#422006
+  classDef cache fill:#e2e8f0,stroke:#64748b,stroke-width:1.5px,color:#0f172a

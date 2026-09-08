@@ -1,0 +1,69 @@
+---
+title: "Greenlight — Evidence Pipeline · artifact by artifact"
+---
+flowchart LR
+  subgraph S0["STAGE 0 · Intake"]
+    F["input.mp4<br/><i>+ title string</i><br/><i>+ thumb.jpg</i>"]:::art
+    H["scan_id = sha256 file · pack_version · title · thumb"]:::step
+  end
+
+  subgraph S1["STAGE 1 · Demux · ~3s · deterministic"]
+    P["ffprobe<br/>duration_ms, fps, streams"]:::step
+    A["audio.wav<br/>16kHz mono pcm_s16le"]:::art
+    K["frames/NNN.jpg<br/>scene &gt; 0.4 · max 40 · 512px"]:::art
+  end
+
+  subgraph S2["STAGE 2 · Perception · ~8s · parallel · external APIs"]
+    W["Groq whisper-large-v3-turbo<br/>timestamp_granularities word"]:::api
+    V["Vision batch · 8 frames per call<br/>structured descriptor extraction"]:::api
+    O["Thumbnail OCR<br/>same vision call, packaging schema"]:::api
+    TR["transcript.json<br/>words with start_ms end_ms conf"]:::art
+    VD["descriptors.json<br/>frame_ms, labels, confidence"]:::art
+    PK["packaging.json<br/>title_text, thumb_text"]:::art
+  end
+
+  subgraph S3["STAGE 3 · Candidates · &lt;100ms · local · zero cost"]
+    C1["lexicon spans"]:::cand
+    C2["density metrics"]:::cand
+    C3["focus windows"]:::cand
+    C4["visual matches"]:::cand
+    C5["packaging spans"]:::cand
+    CAND["candidates.json<br/><b>high recall, low precision, no claims</b>"]:::art
+  end
+
+  subgraph S4["STAGE 4 · Adjudication · ~6s · the only reasoning step"]
+    PR["prompt = candidate + clause text + transcript window<br/><b>the model never sees the open web or its own memory</b>"]:::step
+    AD["Claude · tool-use schema<br/>emit_findings"]:::api
+    ZD["Zod parse"]:::step
+    AL{"clause_id in<br/>allowlist"}:::gate
+    FIND["findings.json<br/><b>every item carries a real clause id</b>"]:::art
+    DRP["drops.jsonl<br/>counted in the README"]:::drop
+  end
+
+  subgraph S5["STAGE 5 · Verdict · &lt;10ms · pure function"]
+    VD2["verdict.json<br/>status, drivers, revenue_range"]:::art
+  end
+
+  F --> H --> P
+  P --> A
+  P --> K
+  A --> W --> TR
+  K --> V --> VD
+  F --> O --> PK
+
+  TR --> C1 & C2 & C3
+  VD --> C4
+  PK --> C5
+  C1 & C2 & C3 & C4 & C5 --> CAND
+
+  CAND --> PR --> AD --> ZD --> AL
+  AL -->|reject| DRP
+  AL -->|accept| FIND
+  FIND --> VD2
+
+  classDef art fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#082f49
+  classDef step fill:#f1f5f9,stroke:#475569,color:#0f172a
+  classDef api fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#451a03
+  classDef cand fill:#f5f3ff,stroke:#6d28d9,color:#2e1065
+  classDef gate fill:#dcfce7,stroke:#15803d,stroke-width:2.5px,color:#052e16
+  classDef drop fill:#fecaca,stroke:#b91c1c,stroke-width:2px,color:#450a0a

@@ -1,0 +1,51 @@
+---
+title: "Greenlight — Policy-as-Data · why the model cannot invent a rule"
+---
+flowchart TB
+  SRC["<b>YouTube Help Center</b><br/>advertiser-friendly guidelines<br/>+ ad guideline update log"]:::src
+  YOU(["<b>You, by hand, on Day 1</b><br/>transcribe clauses into YAML<br/>this is research, not scraping"]):::human
+
+  subgraph PACK["policy/packs/youtube-afg-2026.09.yaml"]
+    direction TB
+    META["<b>pack meta</b><br/>id · version · source_url<br/>captured_at · reviewed_by"]:::meta
+    CL["<b>clauses[]</b><br/>id · title · category<br/>surfaces · severity · detector<br/>thresholds · remediation<br/>effective_date · source_anchor"]:::clause
+    DEP["<b>deprecated_rules[]</b><br/>id · removed_on · superseded_by<br/>why_people_still_believe_it"]:::dep
+  end
+
+  LOAD["<b>loadPack()</b><br/>parse → validate → freeze"]:::code
+  REG[("<b>ClauseRegistry</b><br/>Map&lt;clause_id, Clause&gt;")]:::reg
+  ALLOW[("<b>ALLOWLIST</b><br/>Set&lt;clause_id&gt;")]:::reg
+
+  PROMPT["<b>Adjudicator prompt</b><br/>injects <i>only</i> the clause text<br/>for the candidate's category"]:::code
+  MODEL["<b>LLM</b><br/>returns clause_id + evidence"]:::model
+  V{"<b>allowlist check</b>"}:::gate
+  OK["<b>Finding</b><br/>renders with a clickable citation<br/>and an effective date"]:::ok
+  NO["<b>Drop</b><br/>invented or stale clause<br/>never reaches the UI"]:::no
+
+  TEST["<b>policy.test.ts</b><br/>asserts every deprecated id<br/>is absent from the allowlist"]:::test
+
+  SRC --> YOU --> META & CL & DEP
+  META & CL & DEP --> LOAD --> REG --> ALLOW
+  CL --> PROMPT --> MODEL --> V
+  ALLOW --> V
+  V -->|hit| OK
+  V -->|miss| NO
+  DEP -.-> TEST
+  ALLOW -.-> TEST
+
+  NOTE["<b>The failure this prevents</b><br/>Prompt an LLM with 'find YouTube policy violations'<br/>and it flags the first-7-seconds profanity rule.<br/>That rule was deleted in July 2025.<br/>Greenlight structurally cannot emit it."]:::note
+  NO -.-> NOTE
+
+  classDef src fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#450a0a
+  classDef human fill:#ede9fe,stroke:#7c3aed,stroke-width:2px,color:#2e1065
+  classDef meta fill:#dbeafe,stroke:#1d4ed8,color:#172554
+  classDef clause fill:#dbeafe,stroke:#1d4ed8,stroke-width:2.5px,color:#172554
+  classDef dep fill:#fed7aa,stroke:#c2410c,stroke-width:2px,color:#431407
+  classDef code fill:#f1f5f9,stroke:#475569,color:#0f172a
+  classDef reg fill:#e2e8f0,stroke:#334155,stroke-width:2px,color:#0f172a
+  classDef model fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#451a03
+  classDef gate fill:#dcfce7,stroke:#15803d,stroke-width:2.5px,color:#052e16
+  classDef ok fill:#bbf7d0,stroke:#15803d,stroke-width:2px,color:#052e16
+  classDef no fill:#fecaca,stroke:#b91c1c,stroke-width:2px,color:#450a0a
+  classDef test fill:#f5f3ff,stroke:#6d28d9,color:#2e1065
+  classDef note fill:#fffbeb,stroke:#ca8a04,stroke-width:2px,color:#422006

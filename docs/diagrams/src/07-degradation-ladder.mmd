@@ -1,0 +1,40 @@
+---
+title: "Greenlight — Degradation Ladder · every rung still demos"
+---
+flowchart TB
+  T0["<b>TIER 0 · Full</b><br/>audio + vision + packaging + fix + re-scan + self-cert<br/><i>target state, Monday night</i>"]:::t0
+  T1["<b>TIER 1 · No vision</b><br/>vision API down or over budget<br/>banner: 'visual pass unavailable'<br/><i>audio findings still fix and re-scan</i>"]:::t1
+  T2["<b>TIER 2 · No ASR API</b><br/>Groq down → OpenAI Whisper fallback<br/>→ local faster-whisper via python subprocess"]:::t2
+  T3["<b>TIER 3 · No network at all</b><br/>judge-mode only: 3 cached sample clips<br/>full report, real fixed.mp4 files, real re-scan<br/><i>this is what you demo from</i>"]:::t3
+  T4["<b>TIER 4 · Saturday kill switch</b><br/>loop not working end-to-end?<br/>cut vision permanently, ship audio-only, polish"]:::t4
+
+  Q0{"vision call<br/>ok?"}:::q
+  Q1{"Groq<br/>ok?"}:::q
+  Q2{"any<br/>network?"}:::q
+  Q3{"loop green<br/>by Sat 23:00?"}:::q
+
+  T0 --> Q0
+  Q0 -->|no| T1
+  T1 --> Q1
+  Q0 -->|yes| Q1
+  Q1 -->|no| T2
+  T2 --> Q2
+  Q1 -->|yes| Q2
+  Q2 -->|no| T3
+  Q2 -->|yes| SHIP["<b>Ship</b>"]:::ship
+  T3 --> SHIP
+
+  Q3 -->|no| T4 --> SHIP
+  Q3 -->|yes| T0
+
+  RULE["<b>Never show the judge a spinner or a stack trace.</b><br/>Every failure has a visible, labelled degraded state.<br/>Record the demo from Tier 3 so latency and rate limits<br/>can never break it on camera."]:::rule
+  SHIP -.-> RULE
+
+  classDef t0 fill:#bbf7d0,stroke:#15803d,stroke-width:2px,color:#052e16
+  classDef t1 fill:#d9f99d,stroke:#4d7c0f,stroke-width:2px,color:#1a2e05
+  classDef t2 fill:#fef08a,stroke:#a16207,stroke-width:2px,color:#422006
+  classDef t3 fill:#fed7aa,stroke:#c2410c,stroke-width:2px,color:#431407
+  classDef t4 fill:#fecaca,stroke:#b91c1c,stroke-width:2px,color:#450a0a
+  classDef q fill:#f1f5f9,stroke:#475569,color:#0f172a
+  classDef ship fill:#ede9fe,stroke:#7c3aed,stroke-width:2px,color:#2e1065
+  classDef rule fill:#fffbeb,stroke:#d97706,stroke-width:2px,color:#422006

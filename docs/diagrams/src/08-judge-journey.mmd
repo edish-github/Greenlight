@@ -1,0 +1,30 @@
+---
+title: "Greenlight — Judge Journey · scoring every 15 seconds of the demo"
+---
+flowchart LR
+  A["<b>0:00–0:15</b><br/>yellow icon screenshot<br/>+ one number"]:::hook
+  B["<b>0:15–0:35</b><br/>click sample clip<br/>timeline populates red"]:::func
+  C["<b>0:35–1:10</b><br/>walk 3 findings<br/>click band → player seeks<br/>clause + effective date visible"]:::func
+  D["<b>1:10–1:30</b><br/>naive LLM flags the dead<br/>7-second rule · Greenlight doesn't<br/><b>the kill shot</b>"]:::crea
+  E["<b>1:30–2:00</b><br/>one click fix<br/>play corrected clip<br/><b>bleep is audible</b>"]:::func
+  F["<b>2:00–2:15</b><br/>re-scan → green"]:::func
+  G["<b>2:15–2:30</b><br/>policy YAML + eval table<br/>+ 'swap in a TikTok pack'"]:::tech
+
+  A --> B --> C --> D --> E --> F --> G
+
+  A -.->|"real-world usefulness 30%"| SU[" "]:::score
+  C -.->|"functionality 30%"| SF[" "]:::score
+  D -.->|"creativity 20%"| SC2[" "]:::score
+  E -.->|"functionality 30%"| SF
+  G -.->|"technical execution 20%"| ST[" "]:::score
+
+  SU["<b>Usefulness 30%</b><br/>money he has already lost"]:::score
+  SF["<b>Functionality 30%</b><br/>he watched red become green"]:::score
+  SC2["<b>Creativity 20%</b><br/>only submission in its category"]:::score
+  ST["<b>Technical 20%</b><br/>versioned pack, evals, guardrail"]:::score
+
+  classDef hook fill:#fecaca,stroke:#b91c1c,stroke-width:2px,color:#450a0a
+  classDef func fill:#bbf7d0,stroke:#15803d,stroke-width:2px,color:#052e16
+  classDef crea fill:#ede9fe,stroke:#7c3aed,stroke-width:2.5px,color:#2e1065
+  classDef tech fill:#dbeafe,stroke:#1d4ed8,stroke-width:2px,color:#172554
+  classDef score fill:#fffbeb,stroke:#ca8a04,stroke-width:1.5px,color:#422006

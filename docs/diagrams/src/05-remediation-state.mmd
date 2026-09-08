@@ -1,0 +1,39 @@
+---
+title: "Greenlight — Finding Lifecycle · the closed loop"
+---
+stateDiagram-v2
+  direction LR
+  [*] --> Candidate
+
+  Candidate: <b>Candidate</b><br/>a deterministic detector fired<br/>no claim made yet
+  Adjudicated: <b>Adjudicated</b><br/>model matched it to a clause
+  Dropped: <b>Dropped</b><br/>schema fail or clause not in allowlist<br/>counted in drops.jsonl
+  Finding: <b>Finding</b><br/>rendered with citation + effective date
+  Dismissed: <b>Dismissed by creator</b><br/>human override, logged
+  Planned: <b>Fix planned</b><br/>mute · bleep · trim · blur
+  Manual: <b>Manual review</b><br/>no safe automatic fix exists<br/>e.g. topic focus, packaging rewrite
+  Rendered: <b>Rendered</b><br/>span written into fixed.mp4
+  Resolved: <b>Resolved</b><br/>re-scan no longer fires on this span
+  Persisted: <b>Still firing</b><br/>fix insufficient · escalate to manual
+
+  Candidate --> Adjudicated: passes Zod
+  Candidate --> Dropped: fails schema
+  Adjudicated --> Dropped: clause_id not in allowlist
+  Adjudicated --> Finding: clause_id verified
+  Finding --> Dismissed: creator unchecks it
+  Finding --> Planned: remediation is automatable
+  Finding --> Manual: remediation type is manual_review
+  Planned --> Rendered: ffmpeg filter_complex
+  Rendered --> Resolved: re-scan clean
+  Rendered --> Persisted: re-scan still fires
+  Persisted --> Manual
+  Dismissed --> [*]
+  Resolved --> [*]
+  Manual --> [*]
+  Dropped --> [*]
+
+  note right of Resolved
+    This transition is the demo.
+    Red band becomes green,
+    on camera, in one click.
+  end note

@@ -1,0 +1,53 @@
+---
+title: "Greenlight — Scan Sequence · the 18 seconds the judge watches"
+---
+sequenceDiagram
+  autonumber
+  actor C as Creator
+  participant UI as Report UI
+  participant API as /api/scan
+  participant ORC as Orchestrator
+  participant FF as ffmpeg
+  participant ASR as Groq Whisper
+  participant VIS as Vision
+  participant DET as Candidates
+  participant GATE as Adjudicator + Gate
+  participant CACHE as Scan cache
+
+  C->>UI: drops input.mp4 (+ title, thumbnail)
+  UI->>API: POST multipart
+  API->>ORC: startScan
+  ORC->>CACHE: lookup sha256 + pack_version
+  alt cache hit (all 3 sample clips)
+    CACHE-->>UI: full report · ~200ms
+    Note over UI,CACHE: judge-mode path · zero API calls · cannot fail live
+  else cache miss
+    ORC->>FF: probe + extract audio + keyframes
+    FF-->>ORC: audio.wav, frames/*.jpg  (~3s)
+    par perception runs in parallel
+      ORC->>ASR: transcribe, word granularity
+      ASR-->>ORC: transcript.json  (~6s)
+    and
+      ORC->>VIS: 5 batched calls, 8 frames each
+      VIS-->>ORC: descriptors.json  (~8s)
+    end
+    ORC->>DET: generate candidates (local, <100ms)
+    DET-->>ORC: candidates.json
+    ORC->>GATE: adjudicate against clause text
+    GATE->>GATE: Zod parse → allowlist check
+    GATE-->>ORC: findings.json + drops.jsonl  (~6s)
+    ORC->>ORC: computeVerdict (pure, <10ms)
+    ORC->>CACHE: persist
+    ORC-->>UI: stream progress → full report
+  end
+  UI-->>C: timeline banded red/amber/green
+
+  Note over C,UI: every finding shows evidence,<br/>clause id, effective date, source link
+
+  C->>UI: reviews findings, deselects any false positive
+  C->>API: POST /api/fix with approved plan
+  API->>FF: single filter_complex pass
+  FF-->>API: fixed.mp4  (~4s for a 3-min clip)
+  API->>ORC: auto re-scan fixed.mp4 (new hash)
+  ORC-->>UI: timeline green
+  UI-->>C: download fixed.mp4 + report.json + self-cert sheet

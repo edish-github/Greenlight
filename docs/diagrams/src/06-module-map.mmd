@@ -1,0 +1,59 @@
+---
+title: "Greenlight — Module Dependency Map · what may import what"
+---
+flowchart TB
+  subgraph L4["LAYER 4 · app/ · Next.js routes · thin"]
+    PAGE["app/page.tsx"]:::l4
+    RPT["app/report/[scanId]/page.tsx"]:::l4
+    RSCAN["app/api/scan/route.ts"]:::l4
+    RFIX["app/api/fix/route.ts"]:::l4
+  end
+
+  subgraph L3["LAYER 3 · components/ · presentational only · no fetch"]
+    TL["RiskTimeline.tsx"]:::l3
+    FP["FindingsPanel.tsx"]:::l3
+    CC["ClauseCitation.tsx"]:::l3
+    VH["VerdictHeader.tsx"]:::l3
+    FB["FixBar.tsx"]:::l3
+    NC["NaiveCompare.tsx"]:::l3
+    SC["SelfCertSheet.tsx"]:::l3
+  end
+
+  subgraph L2["LAYER 2 · src/pipeline/ · all the work happens here"]
+    ORC["orchestrator.ts"]:::l2
+    EXT["extract/*"]:::l2
+    TRN["transcribe/*"]:::l2
+    DET["detect/*"]:::l2
+    ADJ["adjudicate/*"]:::l2
+    SCR["score/*"]:::l2
+    REM["remediate/*"]:::l2
+  end
+
+  subgraph L1["LAYER 1 · src/policy · src/store · src/lib · src/types"]
+    POL["policy/loader.ts + packs/*.yaml"]:::l1
+    STO["store/cache.ts"]:::l1
+    LIB["lib/ffmpeg.ts · hash.ts · env.ts"]:::l1
+    TYP["types/*.ts"]:::l1
+  end
+
+  PAGE --> TL & FB
+  RPT --> TL & FP & VH & FB & NC & SC
+  RSCAN --> ORC
+  RFIX --> REM
+  ORC --> EXT & TRN & DET & ADJ & SCR & STO
+  DET --> POL
+  ADJ --> POL
+  SCR --> POL
+  REM --> LIB
+  EXT --> LIB
+  ORC --> TYP
+  FP --> CC
+  L3 -.->|"types only, never functions"| TYP
+
+  RULE["<b>The one import rule</b><br/>components/ may import from src/types<br/>and nothing else in src/.<br/>If a component needs data, the page fetches it.<br/>This keeps the pipeline testable without a browser."]:::rule
+
+  classDef l4 fill:#fef9c3,stroke:#ca8a04,stroke-width:1.5px,color:#422006
+  classDef l3 fill:#ccfbf1,stroke:#0d9488,stroke-width:1.5px,color:#042f2e
+  classDef l2 fill:#dbeafe,stroke:#1d4ed8,stroke-width:2px,color:#172554
+  classDef l1 fill:#e2e8f0,stroke:#334155,stroke-width:1.5px,color:#0f172a
+  classDef rule fill:#fffbeb,stroke:#d97706,stroke-width:2px,color:#422006
